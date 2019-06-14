@@ -9,6 +9,7 @@ public class AdtalosUnityPlugin {
     private static Activity context;
     private final static AdtalosUnityPlugin instance = new AdtalosUnityPlugin();
     private final static BannerAdViewHandler bannerAdViewHandler = new BannerAdViewHandler();
+    private final static NativeAdViewHandler nativeAdViewHandler = new NativeAdViewHandler();
 
     public Activity getCurrentActivity() {
         try {
@@ -48,6 +49,34 @@ public class AdtalosUnityPlugin {
 
     public void showBannerRelative(String adUnitId, int width, int height, int position, int y, IAdtalosListener listener) {
         bannerAdViewHandler.showRelative(adUnitId, width, height, position, y, listener);
+    }
+
+    public void showNativeAbsolute(String adUnitId, int width, int height, int x, int y, IAdtalosListener listener) {
+        nativeAdViewHandler.showAbsolute(adUnitId, width, height, x, y, listener);
+    }
+
+    public void showNativeRelative(String adUnitId, int width, int height, int position, int y, IAdtalosListener listener) {
+        nativeAdViewHandler.showRelative(adUnitId, width, height, position, y, listener);
+    }
+
+    public void playVideo(String adUnitId) {
+        nativeAdViewHandler.playVideo(adUnitId);
+    }
+
+    public void pauseVideo(String adUnitId) {
+        nativeAdViewHandler.pauseVideo(adUnitId);
+    }
+
+    public void muteVideo(String adUnitId, boolean mute) {
+        nativeAdViewHandler.muteVideo(adUnitId, mute);
+    }
+
+    public boolean hasVideo(String adUnitId) {
+        return nativeAdViewHandler.hasVideo(adUnitId);
+    }
+
+    public String getVideoMetaData(String adUnitId) {
+        return nativeAdViewHandler.getVideoMetaData(adUnitId);
     }
 
     public static void destory(String adUnitId) {
