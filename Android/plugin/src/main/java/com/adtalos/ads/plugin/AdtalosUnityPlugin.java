@@ -5,37 +5,37 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
 public class AdtalosUnityPlugin {
-    private static RelativeLayout adsLayout;
-    private static Activity context;
     private final static AdtalosUnityPlugin instance = new AdtalosUnityPlugin();
     private final static BannerAdViewHandler bannerAdViewHandler = new BannerAdViewHandler();
     private final static NativeAdViewHandler nativeAdViewHandler = new NativeAdViewHandler();
+    private final static InterstitialAdHandler interstitialAdHandler = new InterstitialAdHandler();
+    private final static SplashAdHandler splashAdHandler = new SplashAdHandler();
+    private final static RewardedVideoAdHandler rewardedVideoAdHandler = new RewardedVideoAdHandler();
+    private RelativeLayout adsLayout;
+    private Activity context;
 
-    public Activity getCurrentActivity() {
+    private void setActivity(Activity activity) {
+        if (activity != context) {
+            context = activity;
+            context.runOnUiThread(() -> {
+                adsLayout = new RelativeLayout(context);
+                context.addContentView(adsLayout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+            });
+        }
+    }
+
+    Activity getCurrentActivity() {
         try {
             Class<?> unityPlayer = Class.forName("com.unity3d.player.UnityPlayer");
             Activity activity = (Activity) unityPlayer.getField("currentActivity").get(unityPlayer);
             setActivity(activity);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return context;
     }
 
-    public void setActivity(Activity activity) {
-        if (activity != context) {
-            context = activity;
-            context.runOnUiThread(new Runnable() {
-                public void run() {
-                    AdtalosUnityPlugin.adsLayout = new RelativeLayout(AdtalosUnityPlugin.context);
-                    AdtalosUnityPlugin.context.addContentView(AdtalosUnityPlugin.adsLayout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-                }
-            });
-
-        }
-    }
-
-    public RelativeLayout getAdsLayout() {
+    RelativeLayout getAdsLayout() {
         return adsLayout;
     }
 
@@ -79,15 +79,36 @@ public class AdtalosUnityPlugin {
         return nativeAdViewHandler.getVideoMetaData(adUnitId);
     }
 
-    public static void destory(String adUnitId) {
+    public void destory(String adUnitId) {
         AdViewHandler.destory(adUnitId);
     }
 
-    public static void pause(String adUnitId) {
+    public void pause(String adUnitId) {
         AdViewHandler.pause(adUnitId);
     }
 
-    public static void resume(String adUnitId) {
+    public void resume(String adUnitId) {
         AdViewHandler.resume(adUnitId);
     }
+
+    public void loadInterstitialAd(String adUnitId, boolean immersiveMode, IAdtalosListener listener) {
+        interstitialAdHandler.create(adUnitId, immersiveMode, listener);
+    }
+
+    public void loadSplashAd(String adUnitId, IAdtalosListener listener) {
+        splashAdHandler.create(adUnitId, listener);
+    }
+
+    public void loadRewardedVideoAd(String adUnitId, IAdtalosListener listener) {
+        rewardedVideoAdHandler.create(adUnitId, listener);
+    }
+
+    public boolean isLoaded(String adUnitId) {
+        return AdHandler.isLoaded(adUnitId);
+    }
+
+    public void show(String adUnitId) {
+        AdHandler.show(adUnitId);
+    }
+
 }

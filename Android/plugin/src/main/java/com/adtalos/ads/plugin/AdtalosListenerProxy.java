@@ -5,11 +5,11 @@ import com.adtalos.ads.sdk.AdListener;
 import com.adtalos.ads.sdk.AdVideoListener;
 import com.adtalos.ads.sdk.VideoController;
 
-public class AdtalosListenerProxy implements AdListener, AdVideoListener, AdDefaultCustomListener {
+class AdtalosListenerProxy implements AdListener, AdVideoListener, AdDefaultCustomListener {
     private String adUnitId;
-    public IAdtalosListener listener;
+    private IAdtalosListener listener;
 
-    public AdtalosListenerProxy(String adUnitId, IAdtalosListener listener) {
+    AdtalosListenerProxy(String adUnitId, IAdtalosListener listener) {
         this.adUnitId = adUnitId;
         this.listener = listener;
     }

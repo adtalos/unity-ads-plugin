@@ -23,11 +23,11 @@ abstract class AdViewHandler extends AbstractHandler {
     static final int BOTTOM_CENTER = 8;
     static final int BOTTOM_RIGHT = 9;
 
-    protected static Map<String, AdView> adViews = new ConcurrentHashMap<>();
+    static Map<String, AdView> adViews = new ConcurrentHashMap<>();
 
     public abstract void prepare(String adUnitId, int width, int height, IAdtalosListener listener);
 
-    public LayoutParams getAbsoluteLayoutParams(int x, int y, AdSize adSize) {
+    LayoutParams getAbsoluteLayoutParams(int x, int y, AdSize adSize) {
         LayoutParams layoutParams = new LayoutParams(adSize.getWidth() < 0 ? adSize.getWidth() : adSize.getWidthInPixels(), adSize.getHeight() < 0 ? adSize.getHeight() : adSize.getHeightInPixels());
         layoutParams.leftMargin = x;
         layoutParams.topMargin = y;
@@ -35,7 +35,7 @@ abstract class AdViewHandler extends AbstractHandler {
         return layoutParams;
     }
 
-    public LayoutParams getRelationLayoutParams(int position, int y, AdSize adSize) {
+    LayoutParams getRelationLayoutParams(int position, int y, AdSize adSize) {
         LayoutParams layoutParams = new LayoutParams(adSize.getWidth() < 0 ? adSize.getWidth() : adSize.getWidthInPixels(), adSize.getHeight() < 0 ? adSize.getHeight() : adSize.getHeightInPixels());
         if (y > 0) {
             layoutParams.topMargin = y;
@@ -88,7 +88,7 @@ abstract class AdViewHandler extends AbstractHandler {
         return layoutParams;
     }
 
-    public void showAbsolute(String adUnitId, int width, int height, int x, int y, IAdtalosListener listener) {
+    void showAbsolute(String adUnitId, int width, int height, int x, int y, IAdtalosListener listener) {
         prepare(adUnitId, width, height, listener);
         getContext().runOnUiThread(() -> {
             AdView adView = adViews.get(adUnitId);
@@ -100,7 +100,7 @@ abstract class AdViewHandler extends AbstractHandler {
         });
     }
 
-    public void showRelative(String adUnitId, int width, int height, int position, int y, IAdtalosListener listener) {
+    void showRelative(String adUnitId, int width, int height, int position, int y, IAdtalosListener listener) {
         prepare(adUnitId, width, height, listener);
         getContext().runOnUiThread(() -> {
             AdView adView = adViews.get(adUnitId);
@@ -112,7 +112,7 @@ abstract class AdViewHandler extends AbstractHandler {
         });
     }
 
-    public static void destory(String adUnitId) {
+    static void destory(String adUnitId) {
         getContext().runOnUiThread(() -> {
             AdView adView = adViews.get(adUnitId);
             if (adView != null) {
@@ -124,18 +124,17 @@ abstract class AdViewHandler extends AbstractHandler {
         });
     }
 
-    public static void pause(String adUnitId) {
+    static void pause(String adUnitId) {
         getContext().runOnUiThread(() -> {
             AdView adView = adViews.get(adUnitId);
             if (adView != null) adView.pause();
         });
     }
 
-    public static void resume(String adUnitId) {
+    static void resume(String adUnitId) {
         getContext().runOnUiThread(() -> {
             AdView adView = adViews.get(adUnitId);
             if (adView != null) adView.resume();
         });
     }
-
 }

@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.widget.RelativeLayout;
 
 abstract class AbstractHandler {
-    public static Activity getContext() {
+    static Activity getContext() {
         return AdtalosUnityPlugin.getInstance().getCurrentActivity();
     }
 
-    public static RelativeLayout getAdsLayout() {
+    static RelativeLayout getAdsLayout() {
         return AdtalosUnityPlugin.getInstance().getAdsLayout();
     }
 }

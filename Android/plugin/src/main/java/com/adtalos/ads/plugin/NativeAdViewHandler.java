@@ -17,7 +17,7 @@ class NativeAdViewHandler extends AdViewHandler {
         adViews.put(adUnitId, adView);
     }
 
-    public void playVideo(String adUnitId) {
+    void playVideo(String adUnitId) {
         try {
             NativeAdView adView = (NativeAdView) adViews.get(adUnitId);
             if (adView == null) return;
@@ -30,7 +30,7 @@ class NativeAdViewHandler extends AdViewHandler {
         }
     }
 
-    public void pauseVideo(String adUnitId) {
+    void pauseVideo(String adUnitId) {
         try {
             NativeAdView adView = (NativeAdView) adViews.get(adUnitId);
             if (adView == null) return;
@@ -43,7 +43,7 @@ class NativeAdViewHandler extends AdViewHandler {
         }
     }
 
-    public void muteVideo(String adUnitId, boolean mute) {
+    void muteVideo(String adUnitId, boolean mute) {
         try {
             NativeAdView adView = (NativeAdView) adViews.get(adUnitId);
             if (adView == null) return;
@@ -56,7 +56,7 @@ class NativeAdViewHandler extends AdViewHandler {
         }
     }
 
-    public boolean hasVideo(String adUnitId) {
+    boolean hasVideo(String adUnitId) {
         try {
             NativeAdView adView = (NativeAdView) adViews.get(adUnitId);
             if (adView == null) return false;
@@ -67,7 +67,7 @@ class NativeAdViewHandler extends AdViewHandler {
         }
     }
 
-    public String getVideoMetaData(String adUnitId) {
+    String getVideoMetaData(String adUnitId) {
         try {
             NativeAdView adView = (NativeAdView) adViews.get(adUnitId);
             if (adView == null) return null;
