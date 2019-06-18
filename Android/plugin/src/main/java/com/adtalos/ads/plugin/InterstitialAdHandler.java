@@ -9,5 +9,6 @@ class InterstitialAdHandler extends AdHandler {
         AdtalosListenerProxy listenerProxy = new AdtalosListenerProxy(adUnitId, listener);
         ad.setAdListener(listenerProxy);
         ad.setAdDefaultCustomListener(listenerProxy);
+        ads.put(adUnitId, ad);
     }
 }

@@ -89,8 +89,8 @@ abstract class AdViewHandler extends AbstractHandler {
     }
 
     void showAbsolute(String adUnitId, int width, int height, int x, int y, IAdtalosListener listener) {
-        prepare(adUnitId, width, height, listener);
         getContext().runOnUiThread(() -> {
+            prepare(adUnitId, width, height, listener);
             AdView adView = adViews.get(adUnitId);
             if (adView.getParent() != null) {
                 ((ViewGroup) adView.getParent()).removeView(adView);
@@ -101,8 +101,8 @@ abstract class AdViewHandler extends AbstractHandler {
     }
 
     void showRelative(String adUnitId, int width, int height, int position, int y, IAdtalosListener listener) {
-        prepare(adUnitId, width, height, listener);
         getContext().runOnUiThread(() -> {
+            prepare(adUnitId, width, height, listener);
             AdView adView = adViews.get(adUnitId);
             if (adView.getParent() != null) {
                 ((ViewGroup) adView.getParent()).removeView(adView);

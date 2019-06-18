@@ -2,6 +2,7 @@ package com.adtalos.ads.plugin;
 
 import com.adtalos.ads.sdk.AdSize;
 import com.adtalos.ads.sdk.NativeAdView;
+import com.adtalos.ads.sdk.VideoController;
 
 class NativeAdViewHandler extends AdViewHandler {
     @Override
@@ -68,13 +69,10 @@ class NativeAdViewHandler extends AdViewHandler {
     }
 
     String getVideoMetaData(String adUnitId) {
-        try {
-            NativeAdView adView = (NativeAdView) adViews.get(adUnitId);
-            if (adView == null) return null;
-            return adView.getVideoController().getMetadata().toString();
-        }
-        catch (Exception e) {
-            return null;
-        }
+        NativeAdView adView = (NativeAdView) adViews.get(adUnitId);
+        if (adView == null) return null;
+        VideoController.Metadata metadata = adView.getVideoController().getMetadata();
+        if (metadata == null) return null;
+        return metadata.toString();
     }
 }

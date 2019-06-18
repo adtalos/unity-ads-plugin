@@ -9,5 +9,6 @@ class RewardedVideoAdHandler extends AdHandler {
         ad.setAdListener(listenerProxy);
         ad.setAdDefaultCustomListener(listenerProxy);
         ad.setAdVideoListener(listenerProxy);
+        ads.put(adUnitId, ad);
     }
 }

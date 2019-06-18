@@ -24,7 +24,7 @@ class AdtalosListenerProxy implements AdListener, AdVideoListener, AdDefaultCust
     @Override
     public void onAdImpressionFinished() {
         if (listener != null) {
-            listener.onAdtalosEvent(adUnitId, "onAdImpressionFinished", null);
+            listener.onAdtalosEvent(adUnitId, "onAdImpressionFinished", "");
         }
     }
 
@@ -38,7 +38,7 @@ class AdtalosListenerProxy implements AdListener, AdVideoListener, AdDefaultCust
     @Override
     public void onAdLoaded() {
         if (listener != null) {
-            listener.onAdtalosEvent(adUnitId, "onAdLoaded", null);
+            listener.onAdtalosEvent(adUnitId, "onAdLoaded", "");
         }
     }
 
@@ -52,28 +52,28 @@ class AdtalosListenerProxy implements AdListener, AdVideoListener, AdDefaultCust
     @Override
     public void onAdOpened() {
         if (listener != null) {
-            listener.onAdtalosEvent(adUnitId, "onAdOpened", null);
+            listener.onAdtalosEvent(adUnitId, "onAdOpened", "");
         }
     }
 
     @Override
     public void onAdClicked() {
         if (listener != null) {
-            listener.onAdtalosEvent(adUnitId, "onAdClicked", null);
+            listener.onAdtalosEvent(adUnitId, "onAdClicked", "");
         }
     }
 
     @Override
     public void onAdLeftApplication() {
         if (listener != null) {
-            listener.onAdtalosEvent(adUnitId, "onAdLeftApplication", null);
+            listener.onAdtalosEvent(adUnitId, "onAdLeftApplication", "");
         }
     }
 
     @Override
     public void onAdClosed() {
         if (listener != null) {
-            listener.onAdtalosEvent(adUnitId, "onAdClosed", null);
+            listener.onAdtalosEvent(adUnitId, "onAdClosed", "");
         }
     }
 
@@ -87,28 +87,28 @@ class AdtalosListenerProxy implements AdListener, AdVideoListener, AdDefaultCust
     @Override
     public void onVideoStart() {
         if (listener != null) {
-            listener.onAdtalosEvent(adUnitId, "onVideoStart", null);
+            listener.onAdtalosEvent(adUnitId, "onVideoStart", "");
         }
     }
 
     @Override
     public void onVideoPlay() {
         if (listener != null) {
-            listener.onAdtalosEvent(adUnitId, "onVideoPlay", null);
+            listener.onAdtalosEvent(adUnitId, "onVideoPlay", "");
         }
     }
 
     @Override
     public void onVideoPause() {
         if (listener != null) {
-            listener.onAdtalosEvent(adUnitId, "onVideoPause", null);
+            listener.onAdtalosEvent(adUnitId, "onVideoPause", "");
         }
     }
 
     @Override
     public void onVideoEnd() {
         if (listener != null) {
-            listener.onAdtalosEvent(adUnitId, "onVideoEnd", null);
+            listener.onAdtalosEvent(adUnitId, "onVideoEnd", "");
         }
     }
 
@@ -129,14 +129,14 @@ class AdtalosListenerProxy implements AdListener, AdVideoListener, AdDefaultCust
     @Override
     public void onVideoError() {
         if (listener != null) {
-            listener.onAdtalosEvent(adUnitId, "onVideoError", null);
+            listener.onAdtalosEvent(adUnitId, "onVideoError", "");
         }
     }
 
     @Override
     public void onVideoBreak() {
         if (listener != null) {
-            listener.onAdtalosEvent(adUnitId, "onVideoBreak", null);
+            listener.onAdtalosEvent(adUnitId, "onVideoBreak", "");
         }
     }
 }
