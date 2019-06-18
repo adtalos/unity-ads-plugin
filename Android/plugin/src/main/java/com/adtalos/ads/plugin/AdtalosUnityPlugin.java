@@ -89,9 +89,9 @@ public class AdtalosUnityPlugin {
         return nativeAdViewHandler.getVideoMetaData(adUnitId);
     }
 
-    public void destory(String adUnitId) {
-        Log.d("UnityPlugin", "destory");
-        AdViewHandler.destory(adUnitId);
+    public void destroy(String adUnitId) {
+        Log.d("UnityPlugin", "destroy");
+        AdViewHandler.destroy(adUnitId);
     }
 
     public void pause(String adUnitId) {

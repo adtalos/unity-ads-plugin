@@ -112,7 +112,7 @@ abstract class AdViewHandler extends AbstractHandler {
         });
     }
 
-    static void destory(String adUnitId) {
+    static void destroy(String adUnitId) {
         getContext().runOnUiThread(() -> {
             AdView adView = adViews.get(adUnitId);
             if (adView != null) {
