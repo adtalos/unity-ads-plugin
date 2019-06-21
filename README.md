@@ -119,3 +119,26 @@ ad.ShowNativeAbsolute("98738D91D3BB241458D3FAE5A5BF7D34", -1, -2, 0, 0, listener
 
 解释同上。
 
+### 原生视频播放控制
+
+```C#
+bool hasVideo = ad.HasVideo(adUnitId);  // 判断是否存在视频
+
+ad.PlayVideo(adUnitId);                 // 播放视频
+ad.PauseVideo(adUnitId);                // 暂停播放
+ad.MuteVideo(adUnitId, mute);           // 静音视频
+
+AdtalosVideoMetadata metadata = ad.GetVideoMetaData(adUnitId); // 获取视频元数据
+```
+
+参数 `adUnitId` 只能是原生广告Id，且只有 `HasVideo` 返回结果为 `true` 时，其它操作执行才会有效。
+
+### 资源回收
+
+```C#
+ad.Destroy(adUnitId);    // 回收资源
+ad.Pause(adUnitId);      // 暂停广告
+ad.Resume(adUnitId);     // 恢复广告
+```
+
+参数 `adUnitId` 是横幅广告或原生广告位的 Id。
