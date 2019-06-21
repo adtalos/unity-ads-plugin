@@ -117,9 +117,11 @@ namespace Adtalos {
         }
         public bool HasVideo(string adUnitId) {
             Debug.Log("calling HasVideo");
+            return false;
         }
         public AdtalosVideoMetadata GetVideoMetaData(string adUnitId) {
             Debug.Log("calling GetVideoMetaData");
+            return null;
         }
         public void Destroy(string adUnitId) {
             Debug.Log("calling destroy");
