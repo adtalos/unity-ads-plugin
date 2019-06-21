@@ -27,16 +27,16 @@ abstract class AdViewHandler extends AbstractHandler {
 
     public abstract void prepare(String adUnitId, int width, int height, IAdtalosListener listener);
 
-    LayoutParams getAbsoluteLayoutParams(int x, int y, AdSize adSize) {
-        LayoutParams layoutParams = new LayoutParams(adSize.getWidth() < 0 ? adSize.getWidth() : adSize.getWidthInPixels(), adSize.getHeight() < 0 ? adSize.getHeight() : adSize.getHeightInPixels());
+    LayoutParams getAbsoluteLayoutParams(int x, int y) {
+        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         layoutParams.leftMargin = x;
         layoutParams.topMargin = y;
         layoutParams.alignWithParent = true;
         return layoutParams;
     }
 
-    LayoutParams getRelationLayoutParams(int position, int y, AdSize adSize) {
-        LayoutParams layoutParams = new LayoutParams(adSize.getWidth() < 0 ? adSize.getWidth() : adSize.getWidthInPixels(), adSize.getHeight() < 0 ? adSize.getHeight() : adSize.getHeightInPixels());
+    LayoutParams getRelationLayoutParams(int position, int y) {
+        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         if (y > 0) {
             layoutParams.topMargin = y;
         } else if (y < 0) {
@@ -95,7 +95,7 @@ abstract class AdViewHandler extends AbstractHandler {
             if (adView.getParent() != null) {
                 ((ViewGroup) adView.getParent()).removeView(adView);
             }
-            getAdsLayout().addView(adView, getAbsoluteLayoutParams(x, y, adView.getAdSize()));
+            getAdsLayout().addView(adView, getAbsoluteLayoutParams(x, y));
             adView.loadAd(adUnitId);
         });
     }
@@ -107,7 +107,7 @@ abstract class AdViewHandler extends AbstractHandler {
             if (adView.getParent() != null) {
                 ((ViewGroup) adView.getParent()).removeView(adView);
             }
-            getAdsLayout().addView(adView, getRelationLayoutParams(position, y, adView.getAdSize()));
+            getAdsLayout().addView(adView, getRelationLayoutParams(position, y));
             adView.loadAd(adUnitId);
         });
     }

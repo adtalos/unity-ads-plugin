@@ -25,8 +25,7 @@ class NativeAdViewHandler extends AdViewHandler {
             getContext().runOnUiThread(() -> {
                 adView.getVideoController().play();
             });
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -38,8 +37,7 @@ class NativeAdViewHandler extends AdViewHandler {
             getContext().runOnUiThread(() -> {
                 adView.getVideoController().pause();
             });
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -51,8 +49,7 @@ class NativeAdViewHandler extends AdViewHandler {
             getContext().runOnUiThread(() -> {
                 adView.getVideoController().mute(mute);
             });
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -62,8 +59,7 @@ class NativeAdViewHandler extends AdViewHandler {
             NativeAdView adView = (NativeAdView) adViews.get(adUnitId);
             if (adView == null) return false;
             return adView.getVideoController().hasVideo();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }

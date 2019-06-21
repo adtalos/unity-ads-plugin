@@ -22,7 +22,7 @@ public class AdtalosDemo : MonoBehaviour {
     private void OnGUI() {
         if (GUI.Button(new Rect(100, 100, 320, 100), "show banner ad")) {
             // 显示横幅
-            ad.ShowBannerRelative("209A03F87BA3B4EB82BEC9E5F8B41383", 320, 50, AdPosition.BOTTOM_CENTER, 0, listener);
+            ad.ShowBannerRelative("209A03F87BA3B4EB82BEC9E5F8B41383", -1, -2, AdPosition.BOTTOM_CENTER, 0, listener);
         }
         if (GUI.Button(new Rect(500, 100, 320, 100), "show native ad")) {
             // 显示原生
