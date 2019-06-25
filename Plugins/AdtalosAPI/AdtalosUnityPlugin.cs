@@ -35,6 +35,15 @@ namespace Adtalos {
         public void ShowNativeRelative(string adUnitId, int width, int height, int position, int y = 0, AdtalosListener listener = null) {
             jadtalos.Call("showNativeRelative", new object[] { adUnitId, width, height, position, y, new AdtalosListenerProxy(listener) });
         }
+        public void LoadNativeAd(string adUnitId, int width, int height, AdtalosListener listener = null) {
+            jadtalos.Call("loadNativeAd", new object[] { adUnitId, width, height, new AdtalosListenerProxy(listener) });
+        }
+        public void ShowNativeAbsolute(string adUnitId, int x, int y = 0) {
+            jadtalos.Call("showNativeAbsolute", new object[] { adUnitId, x, y });
+        }
+        public void ShowNativeRelative(string adUnitId, int position, int y = 0) {
+            jadtalos.Call("showNativeRelative", new object[] { adUnitId, position, y });
+        }
         public void LoadInterstitialAd(string adUnitId, bool immersiveMode = true, AdtalosListener listener = null) {
             jadtalos.Call("loadInterstitialAd", new object[] { adUnitId, immersiveMode, new AdtalosListenerProxy(listener) });
         }
@@ -89,6 +98,15 @@ namespace Adtalos {
             Debug.Log("calling ShowNativeAbsolute");
         }
         public void ShowNativeRelative(string adUnitId, int width, int height, int position, int y = 0, AdtalosListener listener = null) {
+            Debug.Log("calling ShowNativeRelative");
+        }
+        public void LoadNativeAd(string adUnitId, int width, int height, AdtalosListener listener = null) {
+            Debug.Log("calling LoadNativeAd");
+        }
+        public void ShowNativeAbsolute(string adUnitId, int x, int y = 0) {
+            Debug.Log("calling ShowNativeAbsolute");
+        }
+        public void ShowNativeRelative(string adUnitId, int position, int y = 0) {
             Debug.Log("calling ShowNativeRelative");
         }
         public void LoadInterstitialAd(string adUnitId, bool immersiveMode = true, AdtalosListener listener = null) {

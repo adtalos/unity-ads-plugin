@@ -120,7 +120,7 @@ public class AdtalosUnityPlugin {
     }
 
     public void loadNativeAd(String adUnitId, int width, int height, IAdtalosListener listener) {
-        Log.d("UnityPlugin", "loadAd");
+        Log.d("UnityPlugin", "loadNativeAd");
         nativeAdViewHandler.loadAd(adUnitId, width, height, listener);
     }
 
@@ -130,7 +130,7 @@ public class AdtalosUnityPlugin {
     }
 
     public void showNativeRelative(String adUnitId, int position, int y) {
-        Log.d("UnityPlugin", "showNativeAbsolute");
+        Log.d("UnityPlugin", "showNativeRelative");
         nativeAdViewHandler.showRelative(adUnitId, position, y);
     }
 
