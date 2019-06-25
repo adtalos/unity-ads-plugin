@@ -1,5 +1,7 @@
 package com.adtalos.ads.plugin;
 
+import android.view.ViewGroup;
+
 import com.adtalos.ads.sdk.AdSize;
 import com.adtalos.ads.sdk.NativeAdView;
 import com.adtalos.ads.sdk.VideoController;
@@ -70,5 +72,54 @@ class NativeAdViewHandler extends AdViewHandler {
         VideoController.Metadata metadata = adView.getVideoController().getMetadata();
         if (metadata == null) return null;
         return metadata.toString();
+    }
+
+    void loadAd(String adUnitId, int width, int height, IAdtalosListener listener) {
+        getContext().runOnUiThread(() -> {
+            prepare(adUnitId, width, height, listener);
+            try {
+                NativeAdView adView = (NativeAdView) adViews.get(adUnitId);
+                adView.loadAd(adUnitId, false);
+            } catch (Exception e) {
+            }
+        });
+    }
+
+    void showAbsolute(String adUnitId, int x, int y) {
+        getContext().runOnUiThread(() -> {
+            try {
+                NativeAdView adView = (NativeAdView) adViews.get(adUnitId);
+                if (adView.getParent() != null) {
+                    ((ViewGroup) adView.getParent()).removeView(adView);
+                }
+                getAdsLayout().addView(adView, getAbsoluteLayoutParams(x, y));
+                adView.show();
+            } catch (Exception e) {
+            }
+        });
+    }
+
+    void showRelative(String adUnitId, int position, int y) {
+        getContext().runOnUiThread(() -> {
+            try {
+                NativeAdView adView = (NativeAdView) adViews.get(adUnitId);
+                if (adView.getParent() != null) {
+                    ((ViewGroup) adView.getParent()).removeView(adView);
+                }
+                getAdsLayout().addView(adView, getRelationLayoutParams(position, y));
+                adView.show();
+            } catch (Exception e) {
+            }
+        });
+    }
+
+    boolean isLoaded(String adUnitId) {
+        try {
+            NativeAdView adView = (NativeAdView) adViews.get(adUnitId);
+            if (adView == null) return false;
+            return adView.isLoaded();
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

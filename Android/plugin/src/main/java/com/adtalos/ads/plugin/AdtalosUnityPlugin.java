@@ -119,14 +119,31 @@ public class AdtalosUnityPlugin {
         rewardedVideoAdHandler.create(adUnitId, listener);
     }
 
+    public void loadNativeAd(String adUnitId, int width, int height, IAdtalosListener listener) {
+        Log.d("UnityPlugin", "loadAd");
+        nativeAdViewHandler.loadAd(adUnitId, width, height, listener);
+    }
+
+    public void showNativeAbsolute(String adUnitId, int x, int y) {
+        Log.d("UnityPlugin", "showNativeAbsolute");
+        nativeAdViewHandler.showAbsolute(adUnitId, x, y);
+    }
+
+    public void showNativeRelative(String adUnitId, int position, int y) {
+        Log.d("UnityPlugin", "showNativeAbsolute");
+        nativeAdViewHandler.showRelative(adUnitId, position, y);
+    }
+
     public boolean isLoaded(String adUnitId) {
         Log.d("UnityPlugin", "isLoaded");
-        return AdHandler.isLoaded(adUnitId);
+        if (AdHandler.isLoaded(adUnitId)) {
+            return true;
+        }
+        return nativeAdViewHandler.isLoaded(adUnitId);
     }
 
     public void show(String adUnitId) {
         Log.d("UnityPlugin", "show");
         AdHandler.show(adUnitId);
     }
-
 }

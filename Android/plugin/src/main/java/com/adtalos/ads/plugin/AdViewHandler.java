@@ -4,7 +4,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
-import com.adtalos.ads.sdk.AdSize;
 import com.adtalos.ads.sdk.AdView;
 
 import java.util.Map;
