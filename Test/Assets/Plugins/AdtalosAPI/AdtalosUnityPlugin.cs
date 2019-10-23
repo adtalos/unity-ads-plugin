@@ -1,5 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Runtime.InteropServices;
+using AOT;
+using UnityEngine;
 using UnityEngine.Android;
+using System.Collections.Generic;
+using System;
+
 namespace Adtalos {
     public class AdtalosUnityPlugin {
         private static AdtalosUnityPlugin _instance;
@@ -11,7 +16,96 @@ namespace Adtalos {
             }
             return _instance;
         }
-#if UNITY_ANDROID
+#if UNITY_IOS
+        private static Dictionary<string, AdtalosListener> adtalosListenerDictionary = new Dictionary<string, AdtalosListener>();
+        [MonoPInvokeCallback(typeof(AdtalosListener))]
+        static void DefaultAdtalosListener(string adUnitId, string name, string data) {
+            adtalosListenerDictionary[adUnitId]?.Invoke(adUnitId, name, data);
+        }
+        private void PreInitAdtalos() {
+        }
+        [DllImport("__Internal")]
+        private static extern void _adtalosShowBannerAbsolute(string adUnitId, int width, int height, int x, int y, AdtalosListener listener);
+
+        public void ShowBannerAbsolute(string adUnitId, int width, int height, int x, int y = 0, AdtalosListener listener = null) {
+            adtalosListenerDictionary[adUnitId] = listener;
+           _adtalosShowBannerAbsolute(adUnitId, width, height, x, y, DefaultAdtalosListener);
+        }
+        [DllImport("__Internal")]
+        private static extern void _adtalosShowBannerRelative(string adUnitId, int width, int height, int position, int y, AdtalosListener listener);
+
+        public void ShowBannerRelative(string adUnitId, int width, int height, int position, int y = 0, AdtalosListener listener = null) {
+            adtalosListenerDictionary[adUnitId] = listener;
+            _adtalosShowBannerRelative(adUnitId, width, height, position, y, DefaultAdtalosListener);
+        }
+        [DllImport("__Internal")]
+        private static extern void _adtalosShowNativeAbsolute(string adUnitId, int width, int height, int x, int y, AdtalosListener listener);
+
+        public void ShowNativeAbsolute(string adUnitId, int width, int height, int x, int y = 0, AdtalosListener listener = null)
+        {
+            adtalosListenerDictionary[adUnitId] = listener;
+            _adtalosShowNativeAbsolute(adUnitId, width, height, x, y, DefaultAdtalosListener);
+        }
+        [DllImport("__Internal")]
+        private static extern void _adtalosShowNativeRelative(string adUnitId, int width, int height, int position, int y, AdtalosListener listener);
+
+        public void ShowNativeRelative(string adUnitId, int width, int height, int position, int y = 0, AdtalosListener listener = null)
+        {
+            adtalosListenerDictionary[adUnitId] = listener;
+            _adtalosShowNativeRelative(adUnitId, width, height, position, y, DefaultAdtalosListener);
+        }
+        public void LoadNativeAd(string adUnitId, int width, int height, AdtalosListener listener = null) {
+            Debug.Log("calling LoadNativeAd");
+        }
+        public void ShowNativeAbsolute(string adUnitId, int x, int y = 0) {
+            Debug.Log("calling ShowNativeAbsolute");
+        }
+        public void ShowNativeRelative(string adUnitId, int position, int y = 0) {
+            Debug.Log("calling ShowNativeRelative");
+        }
+        public void LoadInterstitialAd(string adUnitId, bool immersiveMode = true, AdtalosListener listener = null) {
+            Debug.Log("calling LoadInterstitialAd");
+        }
+        public void LoadSplashAd(string adUnitId, AdtalosListener listener = null) {
+            Debug.Log("calling LoadSplashAd");
+        }
+        public void LoadRewardedVideoAd(string adUnitId, AdtalosListener listener = null) {
+            Debug.Log("calling LoadRewardedVideoAd");
+        }
+        public void IsLoaded(string adUnitId) {
+            Debug.Log("calling IsLoaded");
+        }
+        public void Show(string adUnitId) {
+            Debug.Log("calling Show");
+        }
+        public void PlayVideo(string adUnitId) {
+            Debug.Log("calling PlayVideo");
+        }
+        public void PauseVideo(string adUnitId) {
+            Debug.Log("calling PauseVideo");
+        }
+        public void MuteVideo(string adUnitId, bool mute) {
+            Debug.Log("calling MuteVideo");
+        }
+        public bool HasVideo(string adUnitId) {
+            Debug.Log("calling HasVideo");
+            return false;
+        }
+        public AdtalosVideoMetadata GetVideoMetaData(string adUnitId) {
+            Debug.Log("calling GetVideoMetaData");
+            return null;
+        }
+        public void Destroy(string adUnitId) {
+            Debug.Log("calling destroy");
+        }
+        public void Pause(string adUnitId) {
+            Debug.Log("calling Pause");
+        }
+        public void Resume(string adUnitId) {
+            Debug.Log("calling Resume");
+        }
+
+#elif UNITY_ANDROID
         private AndroidJavaObject jadtalos;
 
         private void PreInitAdtalos() {
