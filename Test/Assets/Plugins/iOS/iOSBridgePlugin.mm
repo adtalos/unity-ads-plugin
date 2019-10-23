@@ -1,7 +1,123 @@
+#import <Foundation/Foundation.h>
 #import "UnityAppController.h"
 #import "iOSBridgePlugin.h"
+#import "AdtalosSDK/AdtalosSDK.h"
 
-void _adtalosShowAdAbsolute(char *adUnitId, int width, int height, int x, int y, CGFloat aspectRatio, AdtalosListener listener) {
+static NSMutableDictionary *adViews = [NSMutableDictionary new];
+static NSMutableDictionary *listeners = [NSMutableDictionary new];
+
+@interface AdtalosBridgePluginListener: NSObject<AdtalosListener, AdtalosVideoListener>
+
+- (void) onAdRendered;
+- (void) onAdImpressionFinished;
+- (void) onAdImpressionReceivedError:(NSError *)error;
+- (void) onAdLoaded;
+- (void) onAdFailedToLoad:(NSError *)error;
+- (void) onAdClicked;
+- (void) onAdLeftApplication;
+- (void) onAdOpened;
+- (void) onAdClosed;
+
+- (void) onVideoLoad:(NSDictionary *)metadata;
+- (void) onVideoStart;
+- (void) onVideoPlay;
+- (void) onVideoPause;
+- (void) onVideoEnd;
+- (void) onVideoVolumeChange:(double)volume muted:(BOOL)muted;
+- (void) onVideoTimeUpdate:(double)currentTime duration:(double)duration;
+- (void) onVideoError;
+- (void) onVideoBreak;
+
+@end
+
+@implementation AdtalosBridgePluginListener {
+    AdtalosListenerProxy _listenerProxy;
+    NSString *_adUnitId;
+}
+
+- (instancetype)init:(AdtalosListenerProxy)listenerProxy withAdUnitId:(NSString *)adUnitId {
+    if (self = [super init]) {
+        _listenerProxy = listenerProxy;
+        _adUnitId = adUnitId;
+    }
+    return self;
+}
+
+- (void) onAdRendered {
+    _listenerProxy([_adUnitId UTF8String], "onAdRendered", "");
+}
+
+- (void) onAdImpressionFinished {
+    _listenerProxy([_adUnitId UTF8String], "onAdImpressionFinished", "");
+}
+
+- (void) onAdImpressionReceivedError:(NSError *)error {
+    _listenerProxy([_adUnitId UTF8String], "onAdImpressionReceivedError", [error.localizedDescription UTF8String]);
+}
+
+- (void) onAdLoaded {
+    _listenerProxy([_adUnitId UTF8String], "onAdLoaded", "");
+}
+
+- (void) onAdFailedToLoad:(NSError *)error {
+    _listenerProxy([_adUnitId UTF8String], "onAdFailedToLoad", [error.localizedDescription UTF8String]);
+}
+
+- (void) onAdClicked {
+    _listenerProxy([_adUnitId UTF8String], "onAdClicked", "");
+}
+
+- (void) onAdLeftApplication {
+    _listenerProxy([_adUnitId UTF8String], "onAdLeftApplication", "");
+}
+
+- (void) onAdOpened {
+    _listenerProxy([_adUnitId UTF8String], "onAdOpened", "");
+}
+
+- (void) onAdClosed {
+    _listenerProxy([_adUnitId UTF8String], "onAdClosed", "");
+}
+
+- (void) onVideoLoad:(NSDictionary *)metadata {
+    _listenerProxy([_adUnitId UTF8String], "onVideoLoad", (const char *)[[NSJSONSerialization dataWithJSONObject:metadata options:NSJSONWritingPrettyPrinted error:nil] bytes]);
+}
+
+- (void) onVideoStart {
+    _listenerProxy([_adUnitId UTF8String], "onVideoStart", "");
+}
+
+- (void) onVideoPlay {
+    _listenerProxy([_adUnitId UTF8String], "onVideoPlay", "");
+}
+
+- (void) onVideoPause {
+    _listenerProxy([_adUnitId UTF8String], "onVideoPause", "");
+}
+
+- (void) onVideoEnd {
+    _listenerProxy([_adUnitId UTF8String], "onVideoEnd", "");
+}
+
+- (void) onVideoVolumeChange:(double)volume muted:(BOOL)muted {
+    _listenerProxy([_adUnitId UTF8String], "onVideoVolumeChange", (const char *)[[NSJSONSerialization dataWithJSONObject:@{@"volume": [NSNumber numberWithDouble: volume], @"muted":[NSNumber numberWithBool: muted]} options:NSJSONWritingPrettyPrinted error:nil] bytes]);
+}
+
+- (void) onVideoTimeUpdate:(double)currentTime duration:(double)duration {
+    _listenerProxy([_adUnitId UTF8String], "onVideoTimeUpdate", (const char *)[[NSJSONSerialization dataWithJSONObject:@{@"currentTime":[NSNumber numberWithDouble: currentTime], @"duration":[NSNumber numberWithDouble: duration]} options:NSJSONWritingPrettyPrinted error:nil] bytes]);
+}
+
+- (void) onVideoError {
+    _listenerProxy([_adUnitId UTF8String], "onVideoError", "");
+}
+
+- (void) onVideoBreak {
+    _listenerProxy([_adUnitId UTF8String], "onVideoBreak", "");
+}
+
+@end
+
+void _adtalosShowAdAbsolute(const char *adUnitId, int width, int height, int x, int y, CGFloat aspectRatio, AdtalosListenerProxy listenerProxy) {
     if (width <= 0 || height <= 0) {
         width = (int)[UIScreen mainScreen].bounds.size.width;
         height = (int)(width * aspectRatio);
@@ -9,18 +125,24 @@ void _adtalosShowAdAbsolute(char *adUnitId, int width, int height, int x, int y,
             y -= height;
         }
     }
+    NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
     AdtalosAdView *adView = [[AdtalosAdView alloc] initWithFrame:CGRectMake(x, y, width, height)];
     adView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-    [adView loadAd: [[NSString alloc] initWithUTF8String:adUnitId]];
+    adViews[unitId] = adView;
+    AdtalosBridgePluginListener *listener = [[AdtalosBridgePluginListener alloc] init:listenerProxy withAdUnitId:unitId];
+    listeners[unitId] = listener;
+    adView.delegate = listener;
+    adView.videoController.delegate = listener;
+    [adView loadAd: unitId];
     [GetAppController().rootView addSubview:adView];
 }
 
-void _adtalosShowBannerAbsolute(char *adUnitId, int width, int height, int x, int y, AdtalosListener listener) {
-    _adtalosShowAdAbsolute(adUnitId, width, height, x, y, 5.0 / 32.0, listener);
+void _adtalosShowBannerAbsolute(const char *adUnitId, int width, int height, int x, int y, AdtalosListenerProxy listenerProxy) {
+    _adtalosShowAdAbsolute(adUnitId, width, height, x, y, 5.0 / 32.0, listenerProxy);
 }
 
-void _adtalosShowNativeAbsolute(char *adUnitId, int width, int height, int x, int y, AdtalosListener listener) {
-    _adtalosShowAdAbsolute(adUnitId, width, height, x, y, 5.0 / 7.0, listener);
+void _adtalosShowNativeAbsolute(const char *adUnitId, int width, int height, int x, int y, AdtalosListenerProxy listenerProxy) {
+    _adtalosShowAdAbsolute(adUnitId, width, height, x, y, 5.0 / 7.0, listenerProxy);
 }
 
 typedef NS_ENUM(int, AdtalosAdPosition) {
@@ -36,7 +158,7 @@ typedef NS_ENUM(int, AdtalosAdPosition) {
     AdtalosAdPositionBottomRight      = 9
 };
 
-void _adtalosShowRelative(char *adUnitId, int width, int height, int position, int y, CGFloat aspectRatio, AdtalosListener listener) {
+void _adtalosShowRelative(const char *adUnitId, int width, int height, int position, int y, CGFloat aspectRatio, AdtalosListenerProxy listenerProxy) {
     if (width <= 0 || height <= 0) {
         width = (int)[UIScreen mainScreen].bounds.size.width;
         height = (int)(width * aspectRatio);
@@ -100,16 +222,22 @@ void _adtalosShowRelative(char *adUnitId, int width, int height, int position, i
             autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
             break;
     }
+    NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
     AdtalosAdView *adView = [[AdtalosAdView alloc] initWithFrame:CGRectMake(point.x, point.y, width, height)];
     adView.autoresizingMask = autoresizingMask;
-    [adView loadAd: [[NSString alloc] initWithUTF8String:adUnitId]];
+    adViews[unitId] = adView;
+    AdtalosBridgePluginListener *listener = [[AdtalosBridgePluginListener alloc] init:listenerProxy withAdUnitId:unitId];
+    listeners[unitId] = listener;
+    adView.delegate = listener;
+    adView.videoController.delegate = listener;
+    [adView loadAd: unitId];
     [GetAppController().rootView addSubview:adView];
 }
 
-void _adtalosShowBannerRelative(char *adUnitId, int width, int height, int position, int y, AdtalosListener listener) {
-    _adtalosShowRelative(adUnitId, width, height, position, y, 5.0 / 32.0, listener);
+void _adtalosShowBannerRelative(const char *adUnitId, int width, int height, int position, int y, AdtalosListenerProxy listenerProxy) {
+    _adtalosShowRelative(adUnitId, width, height, position, y, 5.0 / 32.0, listenerProxy);
 }
 
-void _adtalosShowNativeRelative(char *adUnitId, int width, int height, int position, int y, AdtalosListener listener) {
-    _adtalosShowRelative(adUnitId, width, height, position, y, 5.0 / 7.0, listener);
+void _adtalosShowNativeRelative(const char *adUnitId, int width, int height, int position, int y, AdtalosListenerProxy listenerProxy) {
+    _adtalosShowRelative(adUnitId, width, height, position, y, 5.0 / 7.0, listenerProxy);
 }

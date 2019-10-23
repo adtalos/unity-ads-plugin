@@ -1,7 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Runtime.InteropServices;
+using UnityEngine;
 namespace Adtalos {
     public delegate void AdtalosListener(string adUnitId, string name, string data);
-
+#if UNITY_IOS
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void AdtalosListenerProxy(string adUnitId, string name, string data);
+#endif
 #if UNITY_ANDROID
     public class AdtalosListenerProxy : AndroidJavaProxy {
         private AdtalosListener listener;
