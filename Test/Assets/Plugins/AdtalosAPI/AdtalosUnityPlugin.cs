@@ -29,21 +29,18 @@ namespace Adtalos {
 
         [DllImport("__Internal")]
         private static extern void _adtalosShowBannerAbsolute(string adUnitId, int width, int height, int x, int y, AdtalosListenerProxy listenerProxy);
-
         public void ShowBannerAbsolute(string adUnitId, int width, int height, int x, int y = 0, AdtalosListener listener = null) {
             adtalosListenerDictionary[adUnitId] = listener;
            _adtalosShowBannerAbsolute(adUnitId, width, height, x, y, DefaultAdtalosListener);
         }
         [DllImport("__Internal")]
         private static extern void _adtalosShowBannerRelative(string adUnitId, int width, int height, int position, int y, AdtalosListenerProxy listenerProxy);
-
         public void ShowBannerRelative(string adUnitId, int width, int height, int position, int y = 0, AdtalosListener listener = null) {
             adtalosListenerDictionary[adUnitId] = listener;
             _adtalosShowBannerRelative(adUnitId, width, height, position, y, DefaultAdtalosListener);
         }
         [DllImport("__Internal")]
         private static extern void _adtalosShowNativeAbsolute(string adUnitId, int width, int height, int x, int y, AdtalosListenerProxy listenerProxy);
-
         public void ShowNativeAbsolute(string adUnitId, int width, int height, int x, int y = 0, AdtalosListener listener = null)
         {
             adtalosListenerDictionary[adUnitId] = listener;
@@ -51,7 +48,6 @@ namespace Adtalos {
         }
         [DllImport("__Internal")]
         private static extern void _adtalosShowNativeRelative(string adUnitId, int width, int height, int position, int y, AdtalosListenerProxy listenerProxy);
-
         public void ShowNativeRelative(string adUnitId, int width, int height, int position, int y = 0, AdtalosListener listener = null)
         {
             adtalosListenerDictionary[adUnitId] = listener;
@@ -98,8 +94,10 @@ namespace Adtalos {
             Debug.Log("calling GetVideoMetaData");
             return null;
         }
+        [DllImport("__Internal")]
+        private static extern void _adtalosDestroy(string adUnitId);
         public void Destroy(string adUnitId) {
-            Debug.Log("calling destroy");
+            _adtalosDestroy(adUnitId);
         }
         public void Pause(string adUnitId) {
             Debug.Log("calling Pause");

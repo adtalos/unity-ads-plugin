@@ -241,3 +241,16 @@ void _adtalosShowBannerRelative(const char *adUnitId, int width, int height, int
 void _adtalosShowNativeRelative(const char *adUnitId, int width, int height, int position, int y, AdtalosListenerProxy listenerProxy) {
     _adtalosShowRelative(adUnitId, width, height, position, y, 5.0 / 7.0, listenerProxy);
 }
+
+void _adtalosDestroy(const char *adUnitId) {
+    NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
+    AdtalosAdView *adView = adViews[unitId];
+    if (adView != nil) {
+        [adViews removeObjectForKey:unitId];
+        [adView removeFromSuperview];
+    }
+    AdtalosBridgePluginListener *listener = listeners[unitId];
+    if (listener != nil) {
+        [listeners removeObjectForKey:unitId];
+    }
+}
