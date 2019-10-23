@@ -35,3 +35,4 @@ sysinfo.txt
 *.apk
 .DS_Store
 */.idea/
+/Test/Test/
