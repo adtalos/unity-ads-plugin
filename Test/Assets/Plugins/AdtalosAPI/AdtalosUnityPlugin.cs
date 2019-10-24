@@ -53,14 +53,21 @@ namespace Adtalos {
             adtalosListenerDictionary[adUnitId] = listener;
             _adtalosShowNativeRelative(adUnitId, width, height, position, y, DefaultAdtalosListener);
         }
+        [DllImport("__Internal")]
+        private static extern void _adtalosLoadNativeAd(string adUnitId, int width, int height, AdtalosListenerProxy listenerProxy);
         public void LoadNativeAd(string adUnitId, int width, int height, AdtalosListener listener = null) {
-            Debug.Log("calling LoadNativeAd");
+            adtalosListenerDictionary[adUnitId] = listener;
+            _adtalosLoadNativeAd(adUnitId, width, height, DefaultAdtalosListener);
         }
+        [DllImport("__Internal")]
+        private static extern void _adtalosShowNativeAdAbsolute(string adUnitId, int x, int y);
         public void ShowNativeAbsolute(string adUnitId, int x, int y = 0) {
-            Debug.Log("calling ShowNativeAbsolute");
+            _adtalosShowNativeAdAbsolute(adUnitId, x, y);
         }
+        [DllImport("__Internal")]
+        private static extern void _adtalosShowNativeAdRelative(string adUnitId, int position, int y);
         public void ShowNativeRelative(string adUnitId, int position, int y = 0) {
-            Debug.Log("calling ShowNativeRelative");
+            _adtalosShowNativeAdRelative(adUnitId, position, y);
         }
         public void LoadInterstitialAd(string adUnitId, bool immersiveMode = true, AdtalosListener listener = null) {
             Debug.Log("calling LoadInterstitialAd");

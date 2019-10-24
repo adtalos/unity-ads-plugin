@@ -100,11 +100,11 @@ static NSMutableDictionary *listeners = [NSMutableDictionary new];
 }
 
 - (void) onVideoVolumeChange:(double)volume muted:(BOOL)muted {
-    _listenerProxy([_adUnitId UTF8String], "onVideoVolumeChange", (const char *)[[NSJSONSerialization dataWithJSONObject:@{@"volume": [NSNumber numberWithDouble: volume], @"muted":[NSNumber numberWithBool: muted]} options:NSJSONWritingPrettyPrinted error:nil] bytes]);
+    _listenerProxy([_adUnitId UTF8String], "onVideoVolumeChange", (const char *)[[NSJSONSerialization dataWithJSONObject:@{@"volume": [NSNumber numberWithDouble:volume], @"muted":[NSNumber numberWithBool:muted]} options:NSJSONWritingPrettyPrinted error:nil] bytes]);
 }
 
 - (void) onVideoTimeUpdate:(double)currentTime duration:(double)duration {
-    _listenerProxy([_adUnitId UTF8String], "onVideoTimeUpdate", (const char *)[[NSJSONSerialization dataWithJSONObject:@{@"currentTime":[NSNumber numberWithDouble: currentTime], @"duration":[NSNumber numberWithDouble: duration]} options:NSJSONWritingPrettyPrinted error:nil] bytes]);
+    _listenerProxy([_adUnitId UTF8String], "onVideoTimeUpdate", (const char *)[[NSJSONSerialization dataWithJSONObject:@{@"currentTime":[NSNumber numberWithDouble:currentTime], @"duration":[NSNumber numberWithDouble:duration]} options:NSJSONWritingPrettyPrinted error:nil] bytes]);
 }
 
 - (void) onVideoError {
@@ -133,7 +133,7 @@ void _adtalosShowAdAbsolute(const char *adUnitId, int width, int height, int x, 
     listeners[unitId] = listener;
     adView.delegate = listener;
     adView.videoController.delegate = listener;
-    [adView loadAd: unitId];
+    [adView loadAd:unitId];
     [GetAppController().rootView addSubview:adView];
 }
 
@@ -162,9 +162,6 @@ void _adtalosShowRelative(const char *adUnitId, int width, int height, int posit
     if (width <= 0 || height <= 0) {
         width = (int)[UIScreen mainScreen].bounds.size.width;
         height = (int)(width * aspectRatio);
-        if (y == [UIScreen mainScreen].bounds.size.height) {
-            y -= height;
-        }
     }
     CGFloat left_x = 0;
     CGFloat top_y = 0;
@@ -230,7 +227,7 @@ void _adtalosShowRelative(const char *adUnitId, int width, int height, int posit
     listeners[unitId] = listener;
     adView.delegate = listener;
     adView.videoController.delegate = listener;
-    [adView loadAd: unitId];
+    [adView loadAd:unitId];
     [GetAppController().rootView addSubview:adView];
 }
 
@@ -240,6 +237,102 @@ void _adtalosShowBannerRelative(const char *adUnitId, int width, int height, int
 
 void _adtalosShowNativeRelative(const char *adUnitId, int width, int height, int position, int y, AdtalosListenerProxy listenerProxy) {
     _adtalosShowRelative(adUnitId, width, height, position, y, 5.0 / 7.0, listenerProxy);
+}
+
+void _adtalosLoadNativeAd(const char *adUnitId, int width, int height, AdtalosListenerProxy listenerProxy) {
+    if (width <= 0 || height <= 0) {
+        width = (int)[UIScreen mainScreen].bounds.size.width;
+        height = (int)(width * 5.0 / 7.0);
+    }
+    NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
+    AdtalosAdView *adView = [[AdtalosAdView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+    adViews[unitId] = adView;
+    AdtalosBridgePluginListener *listener = [[AdtalosBridgePluginListener alloc] init:listenerProxy withAdUnitId:unitId];
+    listeners[unitId] = listener;
+    adView.delegate = listener;
+    adView.videoController.delegate = listener;
+    [adView loadAd:unitId autoShow:NO];
+}
+
+void _adtalosShowNativeAdAbsolute(const char *adUnitId, int x, int y) {
+    NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
+    AdtalosAdView *adView = adViews[unitId];
+    if (adView != nil) {
+        if (y == [UIScreen mainScreen].bounds.size.height) {
+            y = (int)(y - adView.frame.size.height);
+        }
+        adView.frame = CGRectMake(x, y, adView.frame.size.width, adView.frame.size.height);
+        adView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+        [GetAppController().rootView addSubview:adView];
+        [adView show];
+    }
+}
+
+void _adtalosShowNativeAdRelative(const char *adUnitId, int position, int y) {
+    NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
+    AdtalosAdView *adView = adViews[unitId];
+    if (adView != nil) {
+        CGFloat left_x = 0;
+        CGFloat top_y = 0;
+        CGFloat right_x = [UIScreen mainScreen].bounds.size.width - adView.frame.size.width;
+        CGFloat bottom_y = [UIScreen mainScreen].bounds.size.height - adView.frame.size.height;
+        CGFloat center_x = right_x / 2;
+        CGFloat middle_y = bottom_y / 2;
+        CGPoint point;
+        UIViewAutoresizing autoresizingMask;
+        switch((AdtalosAdPosition)position) {
+            case AdtalosAdPositionAbsolute:
+            case AdtalosAdPositionTopLeft:
+                point.x = left_x;
+                point.y = top_y + y;
+                autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
+                break;
+            case AdtalosAdPositionTopCenter:
+                point.x = center_x;
+                point.y = top_y + y;
+                autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleBottomMargin;
+                break;
+            case AdtalosAdPositionTopRight:
+                point.x = right_x;
+                point.y = top_y + y;
+                autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin;
+                break;
+            case AdtalosAdPositionMiddleLeft:
+                point.x = left_x;
+                point.y = middle_y + y;
+                autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+                break;
+            case AdtalosAdPositionMiddleCenter:
+                point.x = center_x;
+                point.y = middle_y + y;
+                autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+                break;
+            case AdtalosAdPositionMiddleRight:
+                point.x = right_x;
+                point.y = middle_y + y;
+                autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+                break;
+            case AdtalosAdPositionBottomLeft:
+                point.x = left_x;
+                point.y = bottom_y + y;
+                autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
+                break;
+            case AdtalosAdPositionBottomCenter:
+                point.x = center_x;
+                point.y = bottom_y + y;
+                autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
+                break;
+            case AdtalosAdPositionBottomRight:
+                point.x = right_x;
+                point.y = bottom_y + y;
+                autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin;
+                break;
+        }
+        adView.frame = CGRectMake(point.x, point.y, adView.frame.size.width, adView.frame.size.height);
+        adView.autoresizingMask = autoresizingMask;
+        [GetAppController().rootView addSubview:adView];
+        [adView show];
+    }
 }
 
 void _adtalosDestroy(const char *adUnitId) {
