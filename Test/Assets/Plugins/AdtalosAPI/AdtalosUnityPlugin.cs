@@ -69,20 +69,33 @@ namespace Adtalos {
         public void ShowNativeRelative(string adUnitId, int position, int y = 0) {
             _adtalosShowNativeAdRelative(adUnitId, position, y);
         }
+        [DllImport("__Internal")]
+        private static extern void _adtalosLoadInterstitialAd(string adUnitId, AdtalosListenerProxy listenerProxy);
         public void LoadInterstitialAd(string adUnitId, bool immersiveMode = true, AdtalosListener listener = null) {
-            Debug.Log("calling LoadInterstitialAd");
+            adtalosListenerDictionary[adUnitId] = listener;
+            _adtalosLoadInterstitialAd(adUnitId, DefaultAdtalosListener);
         }
+        [DllImport("__Internal")]
+        private static extern void _adtalosLoadSplashAd(string adUnitId, AdtalosListenerProxy listenerProxy);
         public void LoadSplashAd(string adUnitId, AdtalosListener listener = null) {
-            Debug.Log("calling LoadSplashAd");
+            adtalosListenerDictionary[adUnitId] = listener;
+            _adtalosLoadSplashAd(adUnitId, DefaultAdtalosListener);
         }
+        [DllImport("__Internal")]
+        private static extern void _adtalosLoadRewardedVideoAd(string adUnitId, AdtalosListenerProxy listenerProxy);
         public void LoadRewardedVideoAd(string adUnitId, AdtalosListener listener = null) {
-            Debug.Log("calling LoadRewardedVideoAd");
+            adtalosListenerDictionary[adUnitId] = listener;
+            _adtalosLoadRewardedVideoAd(adUnitId, DefaultAdtalosListener);
         }
+        [DllImport("__Internal")]
+        private static extern bool _adtalosIsLoaded(string adUnitId);
         public void IsLoaded(string adUnitId) {
-            Debug.Log("calling IsLoaded");
+            _adtalosIsLoaded(adUnitId);
         }
+        [DllImport("__Internal")]
+        private static extern void _adtalosShow(string adUnitId);
         public void Show(string adUnitId) {
-            Debug.Log("calling Show");
+            _adtalosShow(adUnitId);
         }
         public void PlayVideo(string adUnitId) {
             Debug.Log("calling PlayVideo");

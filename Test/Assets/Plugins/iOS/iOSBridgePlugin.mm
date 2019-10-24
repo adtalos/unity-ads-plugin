@@ -5,6 +5,7 @@
 
 static NSMutableDictionary *adViews = [NSMutableDictionary new];
 static NSMutableDictionary *listeners = [NSMutableDictionary new];
+static NSMutableDictionary *ads = [NSMutableDictionary new];
 
 @interface AdtalosBridgePluginListener: NSObject<AdtalosListener, AdtalosVideoListener>
 
@@ -332,6 +333,57 @@ void _adtalosShowNativeAdRelative(const char *adUnitId, int position, int y) {
         adView.autoresizingMask = autoresizingMask;
         [GetAppController().rootView addSubview:adView];
         [adView show];
+    }
+}
+
+void _adtalosLoadInterstitialAd(const char *adUnitId, AdtalosListenerProxy listenerProxy) {
+    NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
+    AdtalosInterstitialAd *ad = [[AdtalosInterstitialAd alloc] init:unitId];
+    AdtalosBridgePluginListener *listener = [[AdtalosBridgePluginListener alloc] init:listenerProxy withAdUnitId:unitId];
+    listeners[unitId] = listener;
+    ad.delegate = listener;
+    ad.videoDelegate = listener;
+    ads[unitId] = ad;
+}
+
+void _adtalosLoadSplashAd(const char *adUnitId, AdtalosListenerProxy listenerProxy) {
+    NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
+    AdtalosSplashAd *ad = [[AdtalosSplashAd alloc] init:unitId];
+    AdtalosBridgePluginListener *listener = [[AdtalosBridgePluginListener alloc] init:listenerProxy withAdUnitId:unitId];
+    listeners[unitId] = listener;
+    ad.delegate = listener;
+    ad.videoDelegate = listener;
+    ads[unitId] = ad;
+}
+
+void _adtalosLoadRewardedVideoAd(const char *adUnitId, AdtalosListenerProxy listenerProxy) {
+    NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
+    AdtalosRewardedVideoAd *ad = [[AdtalosRewardedVideoAd alloc] init:unitId];
+    AdtalosBridgePluginListener *listener = [[AdtalosBridgePluginListener alloc] init:listenerProxy withAdUnitId:unitId];
+    listeners[unitId] = listener;
+    ad.delegate = listener;
+    ad.videoDelegate = listener;
+    ads[unitId] = ad;
+}
+
+bool _adtalosIsLoaded(const char *adUnitId) {
+    NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
+    AdtalosInterstitialAd *ad = ads[unitId];
+    if (ad != nil) {
+        return (bool)[ad isLoaded];
+    }
+    AdtalosAdView *adView = adViews[unitId];
+    if (adView != nil) {
+        return (bool)[adView isLoaded];
+    }
+    return false;
+}
+
+void _adtalosShow(const char *adUnitId) {
+    NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
+    AdtalosInterstitialAd *ad = ads[unitId];
+    if (ad != nil) {
+        [ad show];
     }
 }
 

@@ -7,5 +7,10 @@ extern "C" {
     void _adtalosLoadNativeAd(const char *adUnitId, int width, int height, AdtalosListenerProxy listenerProxy);
     void _adtalosShowNativeAdAbsolute(const char *adUnitId, int x, int y);
     void _adtalosShowNativeAdRelative(const char *adUnitId, int position, int y);
+    void _adtalosLoadInterstitialAd(const char *adUnitId, AdtalosListenerProxy listenerProxy);
+    void _adtalosLoadSplashAd(const char *adUnitId, AdtalosListenerProxy listenerProxy);
+    void _adtalosLoadRewardedVideoAd(const char *adUnitId, AdtalosListenerProxy listenerProxy);
+    bool _adtalosIsLoaded(const char *adUnitId);
+    void _adtalosShow(const char *adUnitId);
     void _adtalosDestroy(const char *adUnitId);
 }
