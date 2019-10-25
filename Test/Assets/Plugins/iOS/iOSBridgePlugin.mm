@@ -18,6 +18,7 @@ static NSMutableDictionary *ads = [NSMutableDictionary new];
 - (void) onAdLeftApplication;
 - (void) onAdOpened;
 - (void) onAdClosed;
+- (void) onAdCustomEvent:(NSString *)name withData:(NSString *)data;
 
 - (void) onVideoLoad:(NSDictionary *)metadata;
 - (void) onVideoStart;
@@ -78,6 +79,10 @@ static NSMutableDictionary *ads = [NSMutableDictionary new];
 
 - (void) onAdClosed {
     _listenerProxy([_adUnitId UTF8String], "onAdClosed", "");
+}
+
+- (void) onAdCustomEvent:(NSString *)name withData:(NSString *)data {
+    _listenerProxy([_adUnitId UTF8String], [name UTF8String], [data UTF8String]);
 }
 
 - (void) onVideoLoad:(NSDictionary *)metadata {
