@@ -436,6 +436,10 @@ void _adtalosDestroy(const char *adUnitId) {
         [adViews removeObjectForKey:unitId];
         [adView removeFromSuperview];
     }
+    AdtalosInterstitialAd *ad = ads[unitId];
+    if (ad != nil) {
+        [ads removeObjectForKey:unitId];
+    }
     AdtalosBridgePluginListener *listener = listeners[unitId];
     if (listener != nil) {
         [listeners removeObjectForKey:unitId];
