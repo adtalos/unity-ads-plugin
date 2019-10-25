@@ -97,22 +97,32 @@ namespace Adtalos {
         public void Show(string adUnitId) {
             _adtalosShow(adUnitId);
         }
+        [DllImport("__Internal")]
+        private static extern void _adtalosPlayVideo(string adUnitId);
         public void PlayVideo(string adUnitId) {
-            Debug.Log("calling PlayVideo");
+            _adtalosPlayVideo(adUnitId);
         }
+        [DllImport("__Internal")]
+        private static extern void _adtalosPauseVideo(string adUnitId);
         public void PauseVideo(string adUnitId) {
-            Debug.Log("calling PauseVideo");
+            _adtalosPauseVideo(adUnitId);
         }
+        [DllImport("__Internal")]
+        private static extern void _adtalosMuteVideo(string adUnitId, bool mute);
         public void MuteVideo(string adUnitId, bool mute) {
-            Debug.Log("calling MuteVideo");
+            _adtalosMuteVideo(adUnitId, mute);
         }
+        [DllImport("__Internal")]
+        private static extern bool _adtalosHasVideo(string adUnitId);
         public bool HasVideo(string adUnitId) {
-            Debug.Log("calling HasVideo");
-            return false;
+            return _adtalosHasVideo(adUnitId);
         }
+        [DllImport("__Internal")]
+        private static extern string _adtalosGetVideoMetaData(string adUnitId);
         public AdtalosVideoMetadata GetVideoMetaData(string adUnitId) {
-            Debug.Log("calling GetVideoMetaData");
-            return null;
+            string data = _adtalosGetVideoMetaData(adUnitId);
+            if (data == null) return null;
+            return new AdtalosVideoMetadata(data);
         }
         [DllImport("__Internal")]
         private static extern void _adtalosDestroy(string adUnitId);
@@ -120,10 +130,9 @@ namespace Adtalos {
             _adtalosDestroy(adUnitId);
         }
         public void Pause(string adUnitId) {
-            Debug.Log("calling Pause");
+            _adtalosPauseVideo(adUnitId);
         }
         public void Resume(string adUnitId) {
-            Debug.Log("calling Resume");
         }
 
 #elif UNITY_ANDROID

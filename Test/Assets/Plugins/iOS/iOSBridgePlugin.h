@@ -12,5 +12,10 @@ extern "C" {
     void _adtalosLoadRewardedVideoAd(const char *adUnitId, AdtalosListenerProxy listenerProxy);
     bool _adtalosIsLoaded(const char *adUnitId);
     void _adtalosShow(const char *adUnitId);
+    void _adtalosPlayVideo(const char *adUnitId);
+    void _adtalosPauseVideo(const char *adUnitId);
+    void _adtalosMuteVideo(const char *adUnitId, bool mute);
+    bool _adtalosHasVideo(const char *adUnitId);
+    const char * _adtalosGetVideoMetaData(const char *adUnitId);
     void _adtalosDestroy(const char *adUnitId);
 }

@@ -387,6 +387,48 @@ void _adtalosShow(const char *adUnitId) {
     }
 }
 
+void _adtalosPlayVideo(const char *adUnitId) {
+    NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
+    AdtalosAdView *adView = adViews[unitId];
+    if (adView != nil) {
+        [adView.videoController play];
+    }
+}
+
+void _adtalosPauseVideo(const char *adUnitId) {
+    NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
+    AdtalosAdView *adView = adViews[unitId];
+    if (adView != nil) {
+        [adView.videoController pause];
+    }
+}
+
+void _adtalosMuteVideo(const char *adUnitId, bool mute) {
+    NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
+    AdtalosAdView *adView = adViews[unitId];
+    if (adView != nil) {
+        [adView.videoController mute:(BOOL)mute];
+    }
+}
+
+bool _adtalosHasVideo(const char *adUnitId) {
+    NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
+    AdtalosAdView *adView = adViews[unitId];
+    if (adView != nil) {
+        return (bool)[adView.videoController hasVideo];
+    }
+    return false;
+}
+
+const char * _adtalosGetVideoMetaData(const char *adUnitId) {
+    NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
+    AdtalosAdView *adView = adViews[unitId];
+    if (adView != nil) {
+        return (const char *)[[NSJSONSerialization dataWithJSONObject:adView.videoController.metadata options:NSJSONWritingPrettyPrinted error:nil] bytes];
+    }
+    return nil;
+}
+
 void _adtalosDestroy(const char *adUnitId) {
     NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
     AdtalosAdView *adView = adViews[unitId];
