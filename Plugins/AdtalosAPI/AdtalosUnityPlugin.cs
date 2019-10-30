@@ -18,9 +18,6 @@ namespace Adtalos {
             if (jadtalos == null) {
                 AndroidJavaClass adtalosUnityPluginClass = new AndroidJavaClass("com.adtalos.ads.plugin.AdtalosUnityPlugin");
                 jadtalos = adtalosUnityPluginClass.CallStatic<AndroidJavaObject>("getInstance");
-                if (!Permission.HasUserAuthorizedPermission("android.permission.READ_PHONE_STATE")) {
-                    Permission.RequestUserPermission("android.permission.READ_PHONE_STATE");
-                }
             }
         }
         public void ShowBannerAbsolute(string adUnitId, int width, int height, int x, int y = 0, AdtalosListener listener = null) {
