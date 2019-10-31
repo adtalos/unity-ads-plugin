@@ -7,7 +7,9 @@ public class AdtalosDemo : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         ad = AdtalosUnityPlugin.Instance();
+#if UNITY_ANDROID
         ad.LandingPageDisplayActionBarEnabled = true;
+#endif
         ad.LoadSplashAd("5C3DD65A809B08A2D6CF3DEFBC7E09C7", listener);
         ad.LoadInterstitialAd("2EF810225D10260506CBB704C96C5325", true, listener);
         ad.LoadRewardedVideoAd("527E187C5DEA600C35309759469ADAA8", listener);
