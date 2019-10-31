@@ -5,6 +5,9 @@ import android.util.Log;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
+import com.adtalos.ads.sdk.AdActivity;
+import com.adtalos.ads.sdk.SDK;
+
 public class AdtalosUnityPlugin {
     private final static AdtalosUnityPlugin instance = new AdtalosUnityPlugin();
     private final static BannerAdViewHandler bannerAdViewHandler = new BannerAdViewHandler();
@@ -42,6 +45,41 @@ public class AdtalosUnityPlugin {
 
     public static AdtalosUnityPlugin getInstance() {
         return instance;
+    }
+
+    public void setOAID(String oaid) {
+        Log.d("UnityPlugin", "setOAID");
+        SDK.setOAID(oaid);
+    }
+
+    public boolean isLandingPageDisplayActionBarEnabled() {
+        Log.d("UnityPlugin", "isLandingPageDisplayActionBarEnabled");
+        return AdActivity.isDisplayActionBarEnabled();
+    }
+
+    public boolean isLandingPageAnimationEnabled() {
+        Log.d("UnityPlugin", "isLandingPageAnimationEnabled");
+        return AdActivity.isAnimationEnabled();
+    }
+
+    public boolean isLandingPageFullScreenEnabled() {
+        Log.d("UnityPlugin", "isLandingPageFullScreenEnabled");
+        return AdActivity.isFullScreenEnabled();
+    }
+
+    public void setLandingPageDisplayActionBarEnabled(boolean enabled) {
+        Log.d("UnityPlugin", "setLandingPageDisplayActionBarEnabled");
+        AdActivity.setDisplayActionBarEnabled(enabled);
+    }
+
+    public void setLandingPageAnimationEnabled(boolean enabled) {
+        Log.d("UnityPlugin", "setLandingPageAnimationEnabled");
+        AdActivity.setAnimationEnabled(enabled);
+    }
+
+    public void setLandingPageFullScreenEnabled(boolean enabled) {
+        Log.d("UnityPlugin", "setLandingPageFullScreenEnabled");
+        AdActivity.setFullScreenEnabled(enabled);
     }
 
     public void showBannerAbsolute(String adUnitId, int width, int height, int x, int y, IAdtalosListener listener) {

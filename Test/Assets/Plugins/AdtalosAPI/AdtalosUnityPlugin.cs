@@ -147,6 +147,43 @@ namespace Adtalos {
                 }
             }
         }
+
+        private string oaid = string.Empty;
+        public string OAID {
+            get { return oaid; }
+            set {
+                oaid = value;
+                jadtalos.Call("setOAID", oaid);
+            }
+        }
+
+        public bool LandingPageDisplayActionBarEnabled {
+            get {
+                return jadtalos.Call<bool>("isLandingPageDisplayActionBarEnabled");
+            }
+            set {
+                jadtalos.Call("setLandingPageDisplayActionBarEnabled", value);
+            }
+        }
+
+        public bool LandingPageAnimationEnabled {
+            get {
+                return jadtalos.Call<bool>("isLandingPageAnimationEnabled");
+            }
+            set {
+                jadtalos.Call("setLandingPageAnimationEnabled", value);
+            }
+        }
+
+        public bool LandingPageFullScreenEnabled {
+            get {
+                return jadtalos.Call<bool>("isLandingPageFullScreenEnabled");
+            }
+            set {
+                jadtalos.Call("setLandingPageFullScreenEnabled", value);
+            }
+        }
+
         public void ShowBannerAbsolute(string adUnitId, int width, int height, int x, int y = 0, AdtalosListener listener = null) {
             jadtalos.Call("showBannerAbsolute", new object[] { adUnitId, width, height, x, y, new AdtalosListenerProxy(listener) });
         }
