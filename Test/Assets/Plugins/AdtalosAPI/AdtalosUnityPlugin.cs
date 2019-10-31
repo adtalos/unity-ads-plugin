@@ -185,66 +185,66 @@ namespace Adtalos {
         }
 
         public void ShowBannerAbsolute(string adUnitId, int width, int height, int x, int y = 0, AdtalosListener listener = null) {
-            jadtalos.Call("showBannerAbsolute", new object[] { adUnitId, width, height, x, y, new AdtalosListenerProxy(listener) });
+            jadtalos.Call("showBannerAbsolute", adUnitId, width, height, x, y, new AdtalosListenerProxy(listener));
         }
         public void ShowBannerRelative(string adUnitId, int width, int height, int position, int y = 0, AdtalosListener listener = null) {
-            jadtalos.Call("showBannerRelative", new object[] { adUnitId, width, height, position, y, new AdtalosListenerProxy(listener) });
+            jadtalos.Call("showBannerRelative", adUnitId, width, height, position, y, new AdtalosListenerProxy(listener));
         }
         public void ShowNativeAbsolute(string adUnitId, int width, int height, int x, int y = 0, AdtalosListener listener = null) {
-            jadtalos.Call("showNativeAbsolute", new object[] { adUnitId, width, height, x, y, new AdtalosListenerProxy(listener) });
+            jadtalos.Call("showNativeAbsolute", adUnitId, width, height, x, y, new AdtalosListenerProxy(listener));
         }
         public void ShowNativeRelative(string adUnitId, int width, int height, int position, int y = 0, AdtalosListener listener = null) {
-            jadtalos.Call("showNativeRelative", new object[] { adUnitId, width, height, position, y, new AdtalosListenerProxy(listener) });
+            jadtalos.Call("showNativeRelative", adUnitId, width, height, position, y, new AdtalosListenerProxy(listener));
         }
         public void LoadNativeAd(string adUnitId, int width, int height, AdtalosListener listener = null) {
-            jadtalos.Call("loadNativeAd", new object[] { adUnitId, width, height, new AdtalosListenerProxy(listener) });
+            jadtalos.Call("loadNativeAd", adUnitId, width, height, new AdtalosListenerProxy(listener));
         }
         public void ShowNativeAbsolute(string adUnitId, int x, int y = 0) {
-            jadtalos.Call("showNativeAbsolute", new object[] { adUnitId, x, y });
+            jadtalos.Call("showNativeAbsolute", adUnitId, x, y);
         }
         public void ShowNativeRelative(string adUnitId, int position, int y = 0) {
-            jadtalos.Call("showNativeRelative", new object[] { adUnitId, position, y });
+            jadtalos.Call("showNativeRelative", adUnitId, position, y);
         }
         public void LoadInterstitialAd(string adUnitId, bool immersiveMode = true, AdtalosListener listener = null) {
-            jadtalos.Call("loadInterstitialAd", new object[] { adUnitId, immersiveMode, new AdtalosListenerProxy(listener) });
+            jadtalos.Call("loadInterstitialAd", adUnitId, immersiveMode, new AdtalosListenerProxy(listener));
         }
         public void LoadSplashAd(string adUnitId, AdtalosListener listener = null) {
-            jadtalos.Call("loadSplashAd", new object[] { adUnitId, new AdtalosListenerProxy(listener) });
+            jadtalos.Call("loadSplashAd", adUnitId, new AdtalosListenerProxy(listener));
         }
         public void LoadRewardedVideoAd(string adUnitId, AdtalosListener listener = null) {
-            jadtalos.Call("loadRewardedVideoAd", new object[] { adUnitId, new AdtalosListenerProxy(listener) });
+            jadtalos.Call("loadRewardedVideoAd", adUnitId, new AdtalosListenerProxy(listener));
         }
         public void IsLoaded(string adUnitId) {
-            jadtalos.Call("isLoaded", new object[] { adUnitId });
+            jadtalos.Call("isLoaded", adUnitId);
         }
         public void Show(string adUnitId) {
-            jadtalos.Call("show", new object[] { adUnitId });
+            jadtalos.Call("show", adUnitId);
         }
         public void PlayVideo(string adUnitId) {
-            jadtalos.Call("playVideo", new object[] { adUnitId });
+            jadtalos.Call("playVideo", adUnitId);
         }
         public void PauseVideo(string adUnitId) {
-            jadtalos.Call("pauseVideo", new object[] { adUnitId });
+            jadtalos.Call("pauseVideo", adUnitId);
         }
         public void MuteVideo(string adUnitId, bool mute) {
-            jadtalos.Call("muteVideo", new object[] { adUnitId, mute });
+            jadtalos.Call("muteVideo", adUnitId, mute);
         }
         public bool HasVideo(string adUnitId) {
-            return jadtalos.Call<bool>("hasVideo", new object[] { adUnitId });
+            return jadtalos.Call<bool>("hasVideo", adUnitId);
         }
         public AdtalosVideoMetadata GetVideoMetaData(string adUnitId) {
-            string data = jadtalos.Call<string>("getVideoMetaData", new object[] { adUnitId });
+            string data = jadtalos.Call<string>("getVideoMetaData", adUnitId);
             if (data == null) return null;
             return new AdtalosVideoMetadata(data);
         }
         public void Destroy(string adUnitId) {
-            jadtalos.Call("destroy", new object[] { adUnitId });
+            jadtalos.Call("destroy", adUnitId);
         }
         public void Pause(string adUnitId) {
-            jadtalos.Call("pause", new object[] { adUnitId });
+            jadtalos.Call("pause", adUnitId);
         }
         public void Resume(string adUnitId) {
-            jadtalos.Call("resume", new object[] { adUnitId });
+            jadtalos.Call("resume", adUnitId);
         }
 #else
         private void PreInitAdtalos() {}
