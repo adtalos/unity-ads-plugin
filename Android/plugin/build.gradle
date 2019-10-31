@@ -29,5 +29,5 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    compileOnly 'com.adtalos.ads:sdk:1.7.0'
+    compileOnly 'com.adtalos.ads:sdk:1.7.1'
 }
