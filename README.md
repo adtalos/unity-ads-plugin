@@ -43,7 +43,32 @@ ad.LoadSplashAd("5C3DD65A809B08A2D6CF3DEFBC7E09C7", listener);
     AdtalosListener listener = (adUnitId, name, data) => Debug.Log("adUnitId: " + adUnitId + " event: " + name + " data: " + data);
 ```
 
-上面就是 `listener` 的定义方法。其中 `adUnitId` 参数表示触发该事件的广告 Id，`name` 表示触发的事件名称，跟 SDK 标准事件对应的都是 `on` 开头的事件名，自定义事件名称推荐不要加 `on` 开头的字样，防止跟标准事件发生冲突，也便于识别。关于自定义事件，请参考 [SDK 文档](https://github.com/adtalos/android-ads-sdk-demo)中 [JavaScript 与 Java 交互](https://github.com/adtalos/android-ads-sdk-demo/wiki/%E6%A8%A1%E6%9D%BF#javascript-%E4%B8%8E-java-%E4%BA%A4%E4%BA%92)部分的内容。
+上面就是 `listener` 的定义方法。其中 `adUnitId` 参数表示触发该事件的广告 Id，`name` 表示触发的事件名称，跟 SDK 标准事件对应的都是 `on` 开头的事件名，自定义事件名称推荐不要加 `on` 开头的字样，防止跟标准事件发生冲突，也便于识别。
+
+下面是标准事件名列表：
+
+* onRendered
+* onImpressionFinished
+* onImpressionReceivedError
+* onLoaded
+* onFailedToLoad
+* onOpened
+* onClicked
+* onLeftApplication
+* onClosed
+* onVideoLoad
+* onVideoStart
+* onVideoPlay
+* onVideoPause
+* onVideoEnd
+* onVideoVolumeChange
+* onVideoTimeUpdate
+* onVideoError
+* onVideoBreak
+
+这些事件的参数和触发条件可以参考：[SDK 事件](https://github.com/adtalos/android-xy-sdk-demo/wiki/%E4%BA%8B%E4%BB%B6)。
+
+关于自定义事件，请参考 SDK 文档中 [JavaScript 与 Java 交互](https://github.com/adtalos/android-xy-sdk-demo/wiki/%E6%A8%A1%E6%9D%BF#javascript-%E4%B8%8E-java-%E4%BA%A4%E4%BA%92)部分的内容。
 
 ### 载入插屏广告
 
