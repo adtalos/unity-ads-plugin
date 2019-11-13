@@ -11,7 +11,7 @@ Adtalos 的 Unity 插件可以让您在 Unity 游戏或 Unity 应用中方便的
    
 ## 运行项目
 
-目前我们的广告仅支持 Android，将编译平台选择为 Android，点 Build and Run 就可以了。
+目前我们的广告仅支持 Android 和 iOS，将编译平台选择为 Android 或 iOS，点 Build and Run 就可以了。
 
 ## 运行演示
 
