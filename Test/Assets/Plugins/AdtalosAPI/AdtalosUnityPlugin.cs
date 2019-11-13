@@ -140,11 +140,11 @@ namespace Adtalos {
 
         private void PreInitAdtalos() {
             if (jadtalos == null) {
-                AndroidJavaClass adtalosUnityPluginClass = new AndroidJavaClass("com.adtalos.ads.plugin.AdtalosUnityPlugin");
+                AndroidJavaClass adtalosUnityPluginClass = new AndroidJavaClass("com.unity.xy.plugin.bridge.UnityPlugin");
                 jadtalos = adtalosUnityPluginClass.CallStatic<AndroidJavaObject>("getInstance");
-                if (!Permission.HasUserAuthorizedPermission("android.permission.READ_PHONE_STATE")) {
-                    Permission.RequestUserPermission("android.permission.READ_PHONE_STATE");
-                }
+                //if (!Permission.HasUserAuthorizedPermission("android.permission.READ_PHONE_STATE")) {
+                //    Permission.RequestUserPermission("android.permission.READ_PHONE_STATE");
+                //}
             }
         }
 
@@ -185,19 +185,19 @@ namespace Adtalos {
         }
 
         public void ShowBannerAbsolute(string adUnitId, int width, int height, int x, int y = 0, AdtalosListener listener = null) {
-            jadtalos.Call("showBannerAbsolute", adUnitId, width, height, x, y, new AdtalosListenerProxy(listener));
+            jadtalos.Call("showBannerAbsolute", adUnitId, width, height, x, y, new ListenerProxy(listener));
         }
         public void ShowBannerRelative(string adUnitId, int width, int height, int position, int y = 0, AdtalosListener listener = null) {
-            jadtalos.Call("showBannerRelative", adUnitId, width, height, position, y, new AdtalosListenerProxy(listener));
+            jadtalos.Call("showBannerRelative", adUnitId, width, height, position, y, new ListenerProxy(listener));
         }
         public void ShowNativeAbsolute(string adUnitId, int width, int height, int x, int y = 0, AdtalosListener listener = null) {
-            jadtalos.Call("showNativeAbsolute", adUnitId, width, height, x, y, new AdtalosListenerProxy(listener));
+            jadtalos.Call("showNativeAbsolute", adUnitId, width, height, x, y, new ListenerProxy(listener));
         }
         public void ShowNativeRelative(string adUnitId, int width, int height, int position, int y = 0, AdtalosListener listener = null) {
-            jadtalos.Call("showNativeRelative", adUnitId, width, height, position, y, new AdtalosListenerProxy(listener));
+            jadtalos.Call("showNativeRelative", adUnitId, width, height, position, y, new ListenerProxy(listener));
         }
         public void LoadNativeAd(string adUnitId, int width, int height, AdtalosListener listener = null) {
-            jadtalos.Call("loadNativeAd", adUnitId, width, height, new AdtalosListenerProxy(listener));
+            jadtalos.Call("loadNative", adUnitId, width, height, new ListenerProxy(listener));
         }
         public void ShowNativeAbsolute(string adUnitId, int x, int y = 0) {
             jadtalos.Call("showNativeAbsolute", adUnitId, x, y);
@@ -206,13 +206,13 @@ namespace Adtalos {
             jadtalos.Call("showNativeRelative", adUnitId, position, y);
         }
         public void LoadInterstitialAd(string adUnitId, bool immersiveMode = true, AdtalosListener listener = null) {
-            jadtalos.Call("loadInterstitialAd", adUnitId, immersiveMode, new AdtalosListenerProxy(listener));
+            jadtalos.Call("loadInterstitial", adUnitId, immersiveMode, new ListenerProxy(listener));
         }
         public void LoadSplashAd(string adUnitId, AdtalosListener listener = null) {
-            jadtalos.Call("loadSplashAd", adUnitId, new AdtalosListenerProxy(listener));
+            jadtalos.Call("loadSplash", adUnitId, new ListenerProxy(listener));
         }
         public void LoadRewardedVideoAd(string adUnitId, AdtalosListener listener = null) {
-            jadtalos.Call("loadRewardedVideoAd", adUnitId, new AdtalosListenerProxy(listener));
+            jadtalos.Call("loadRewardedVideo", adUnitId, new ListenerProxy(listener));
         }
         public void IsLoaded(string adUnitId) {
             jadtalos.Call("isLoaded", adUnitId);

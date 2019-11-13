@@ -1,14 +1,14 @@
-package com.adtalos.ads.plugin;
+package com.unity.xy.plugin.bridge;
 
 import android.app.Activity;
 import android.widget.RelativeLayout;
 
 abstract class AbstractHandler {
     static Activity getContext() {
-        return AdtalosUnityPlugin.getInstance().getCurrentActivity();
+        return UnityPlugin.getInstance().getCurrentActivity();
     }
 
     static RelativeLayout getAdsLayout() {
-        return AdtalosUnityPlugin.getInstance().getAdsLayout();
+        return UnityPlugin.getInstance().getAdsLayout();
     }
 }

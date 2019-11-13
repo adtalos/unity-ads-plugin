@@ -26,8 +26,12 @@ android {
 
 }
 
+repositories {
+    maven { url 'https://nexus.mobrtb.com/repository/sdk' }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    compileOnly 'com.adtalos.ads:sdk:1.7.1'
+    compileOnly 'com.unity.xy.plugin:adtalos-sdk:2.0.0'
 }

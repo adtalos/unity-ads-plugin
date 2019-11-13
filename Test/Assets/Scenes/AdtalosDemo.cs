@@ -29,11 +29,11 @@ public class AdtalosDemo : MonoBehaviour {
         }
         if (GUI.Button(new Rect(380, 100, 320, 100), "load native ad")) {
             // 载入原生
-            ad.LoadNativeAd("98738D91D3BB241458D3FAE5A5BF7D34", -1, -2, listener);
+            ad.LoadNativeAd("98738D91D3BB241458D3FAE5A5BF7134", -1, -2, listener);
         }
         if (GUI.Button(new Rect(730, 100, 320, 100), "show native ad")) {
             // 显示原生
-            ad.ShowNativeRelative("98738D91D3BB241458D3FAE5A5BF7D34", AdPosition.MIDDLE_CENTER, 0);
+            ad.ShowNativeRelative("98738D91D3BB241458D3FAE5A5BF7134", AdPosition.MIDDLE_CENTER, 0);
         }
         if (GUI.Button(new Rect(30, 300, 320, 100), "show interstitial ad")) {
             // 显示插屏

@@ -46,39 +46,39 @@ static NSMutableDictionary *ads = [NSMutableDictionary new];
 }
 
 - (void) onAdRendered {
-    _listenerProxy([_adUnitId UTF8String], "onAdRendered", "");
+    _listenerProxy([_adUnitId UTF8String], "onRendered", "");
 }
 
 - (void) onAdImpressionFinished {
-    _listenerProxy([_adUnitId UTF8String], "onAdImpressionFinished", "");
+    _listenerProxy([_adUnitId UTF8String], "onImpressionFinished", "");
 }
 
 - (void) onAdImpressionReceivedError:(NSError *)error {
-    _listenerProxy([_adUnitId UTF8String], "onAdImpressionReceivedError", [error.localizedDescription UTF8String]);
+    _listenerProxy([_adUnitId UTF8String], "onImpressionReceivedError", [error.localizedDescription UTF8String]);
 }
 
 - (void) onAdLoaded {
-    _listenerProxy([_adUnitId UTF8String], "onAdLoaded", "");
+    _listenerProxy([_adUnitId UTF8String], "onLoaded", "");
 }
 
 - (void) onAdFailedToLoad:(NSError *)error {
-    _listenerProxy([_adUnitId UTF8String], "onAdFailedToLoad", [error.localizedDescription UTF8String]);
+    _listenerProxy([_adUnitId UTF8String], "onFailedToLoad", [error.localizedDescription UTF8String]);
 }
 
 - (void) onAdClicked {
-    _listenerProxy([_adUnitId UTF8String], "onAdClicked", "");
+    _listenerProxy([_adUnitId UTF8String], "onClicked", "");
 }
 
 - (void) onAdLeftApplication {
-    _listenerProxy([_adUnitId UTF8String], "onAdLeftApplication", "");
+    _listenerProxy([_adUnitId UTF8String], "onLeftApplication", "");
 }
 
 - (void) onAdOpened {
-    _listenerProxy([_adUnitId UTF8String], "onAdOpened", "");
+    _listenerProxy([_adUnitId UTF8String], "onOpened", "");
 }
 
 - (void) onAdClosed {
-    _listenerProxy([_adUnitId UTF8String], "onAdClosed", "");
+    _listenerProxy([_adUnitId UTF8String], "onClosed", "");
 }
 
 - (void) onAdCustomEvent:(NSString *)name withData:(NSString *)data {

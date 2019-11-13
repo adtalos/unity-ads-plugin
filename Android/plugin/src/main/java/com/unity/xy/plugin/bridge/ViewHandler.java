@@ -1,15 +1,16 @@
-package com.adtalos.ads.plugin;
+package com.unity.xy.plugin.bridge;
 
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
-import com.adtalos.ads.sdk.AdView;
+import com.unity.xy.plugin.View;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-abstract class AdViewHandler extends AbstractHandler {
+
+abstract class ViewHandler extends AbstractHandler {
 
     static final int ABSOLUTE = 0;
     static final int TOP_LEFT = 1;
@@ -22,9 +23,9 @@ abstract class AdViewHandler extends AbstractHandler {
     static final int BOTTOM_CENTER = 8;
     static final int BOTTOM_RIGHT = 9;
 
-    static Map<String, AdView> adViews = new ConcurrentHashMap<>();
+    static Map<String, View> views = new ConcurrentHashMap<>();
 
-    public abstract void prepare(String adUnitId, int width, int height, IAdtalosListener listener);
+    public abstract void prepare(String unitId, int width, int height, IListener listener);
 
     LayoutParams getAbsoluteLayoutParams(int x, int y) {
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
@@ -87,53 +88,53 @@ abstract class AdViewHandler extends AbstractHandler {
         return layoutParams;
     }
 
-    void showAbsolute(String adUnitId, int width, int height, int x, int y, IAdtalosListener listener) {
+    void showAbsolute(String unitId, int width, int height, int x, int y, IListener listener) {
         getContext().runOnUiThread(() -> {
-            prepare(adUnitId, width, height, listener);
-            AdView adView = adViews.get(adUnitId);
-            if (adView.getParent() != null) {
-                ((ViewGroup) adView.getParent()).removeView(adView);
+            prepare(unitId, width, height, listener);
+            View view = views.get(unitId);
+            if (view.getParent() != null) {
+                ((ViewGroup) view.getParent()).removeView(view);
             }
-            getAdsLayout().addView(adView, getAbsoluteLayoutParams(x, y));
-            adView.loadAd(adUnitId);
+            getAdsLayout().addView(view, getAbsoluteLayoutParams(x, y));
+            view.load(unitId);
         });
     }
 
-    void showRelative(String adUnitId, int width, int height, int position, int y, IAdtalosListener listener) {
+    void showRelative(String unitId, int width, int height, int position, int y, IListener listener) {
         getContext().runOnUiThread(() -> {
-            prepare(adUnitId, width, height, listener);
-            AdView adView = adViews.get(adUnitId);
-            if (adView.getParent() != null) {
-                ((ViewGroup) adView.getParent()).removeView(adView);
+            prepare(unitId, width, height, listener);
+            View view = views.get(unitId);
+            if (view.getParent() != null) {
+                ((ViewGroup) view.getParent()).removeView(view);
             }
-            getAdsLayout().addView(adView, getRelationLayoutParams(position, y));
-            adView.loadAd(adUnitId);
+            getAdsLayout().addView(view, getRelationLayoutParams(position, y));
+            view.load(unitId);
         });
     }
 
-    static void destroy(String adUnitId) {
+    static void destroy(String unitId) {
         getContext().runOnUiThread(() -> {
-            AdView adView = adViews.get(adUnitId);
-            if (adView != null) {
-                if (adView.getParent() != null) {
-                    ((ViewGroup) adView.getParent()).removeView(adView);
+            View view = views.get(unitId);
+            if (view != null) {
+                if (view.getParent() != null) {
+                    ((ViewGroup) view.getParent()).removeView(view);
                 }
-                adView.destroy();
+                view.destroy();
             }
         });
     }
 
-    static void pause(String adUnitId) {
+    static void pause(String unitId) {
         getContext().runOnUiThread(() -> {
-            AdView adView = adViews.get(adUnitId);
-            if (adView != null) adView.pause();
+            View view = views.get(unitId);
+            if (view != null) view.pause();
         });
     }
 
-    static void resume(String adUnitId) {
+    static void resume(String unitId) {
         getContext().runOnUiThread(() -> {
-            AdView adView = adViews.get(adUnitId);
-            if (adView != null) adView.resume();
+            View view = views.get(unitId);
+            if (view != null) view.resume();
         });
     }
 }
