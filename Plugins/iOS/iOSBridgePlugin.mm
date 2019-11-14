@@ -425,6 +425,24 @@ bool _adtalosHasVideo(const char *adUnitId) {
     return false;
 }
 
+bool _adtalosIsPlaying(const char *adUnitId) {
+    NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
+    AdtalosAdView *adView = adViews[unitId];
+    if (adView != nil) {
+        return (bool)[adView.videoController isPlaying];
+    }
+    return false;
+}
+
+bool _adtalosIsEnded(const char *adUnitId) {
+    NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
+    AdtalosAdView *adView = adViews[unitId];
+    if (adView != nil) {
+        return (bool)[adView.videoController isEnded];
+    }
+    return false;
+}
+
 const char * _adtalosGetVideoMetaData(const char *adUnitId) {
     NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
     AdtalosAdView *adView = adViews[unitId];

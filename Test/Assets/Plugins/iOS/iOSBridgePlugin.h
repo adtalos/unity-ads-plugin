@@ -16,6 +16,8 @@ extern "C" {
     void _adtalosPauseVideo(const char *adUnitId);
     void _adtalosMuteVideo(const char *adUnitId, bool mute);
     bool _adtalosHasVideo(const char *adUnitId);
+    bool _adtalosIsPlaying(const char *adUnitId);
+    bool _adtalosIsEnded(const char *adUnitId);
     const char * _adtalosGetVideoMetaData(const char *adUnitId);
     void _adtalosDestroy(const char *adUnitId);
 }
