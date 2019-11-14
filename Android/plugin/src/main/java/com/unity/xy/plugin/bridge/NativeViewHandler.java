@@ -136,10 +136,10 @@ class NativeViewHandler extends ViewHandler {
     boolean isEnded(String unitId) {
         try {
             View view = views.get(unitId);
-            if (view == null) return false;
+            if (view == null) return true;
             return view.getVideoController().isEnded();
         } catch (Exception e) {
-            return false;
+            return true;
         }
     }
 }
