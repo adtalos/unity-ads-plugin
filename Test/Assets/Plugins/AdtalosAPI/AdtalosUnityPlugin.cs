@@ -118,6 +118,16 @@ namespace Adtalos {
             return _adtalosHasVideo(adUnitId);
         }
         [DllImport("__Internal")]
+        private static extern bool _adtalosIsPlaying(string adUnitId);
+        public bool IsPlaying(string adUnitId) {
+            return _adtalosIsPlaying(adUnitId);
+        }
+        [DllImport("__Internal")]
+        private static extern bool _adtalosIsEnded(string adUnitId);
+        public bool IsEnded(string adUnitId) {
+            return _adtalosIsEnded(adUnitId);
+        }
+        [DllImport("__Internal")]
         private static extern string _adtalosGetVideoMetaData(string adUnitId);
         public AdtalosVideoMetadata GetVideoMetaData(string adUnitId) {
             string data = _adtalosGetVideoMetaData(adUnitId);
@@ -232,6 +242,12 @@ namespace Adtalos {
         public bool HasVideo(string adUnitId) {
             return jadtalos.Call<bool>("hasVideo", adUnitId);
         }
+        public bool IsPlaying(string adUnitId) {
+            return jadtalos.Call<bool>("isPlaying", adUnitId);
+        }
+        public bool IsEnded(string adUnitId) {
+            return jadtalos.Call<bool>("isEnded", adUnitId);
+        }
         public AdtalosVideoMetadata GetVideoMetaData(string adUnitId) {
             string data = jadtalos.Call<string>("getVideoMetaData", adUnitId);
             if (data == null) return null;
@@ -297,6 +313,14 @@ namespace Adtalos {
         public bool HasVideo(string adUnitId) {
             Debug.Log("calling HasVideo");
             return false;
+        }
+        public bool IsPlaying(string adUnitId) {
+            Debug.Log("calling IsPlaying");
+            return false;
+        }
+        public bool IsEnded(string adUnitId) {
+            Debug.Log("calling IsEnded");
+            return true;
         }
         public AdtalosVideoMetadata GetVideoMetaData(string adUnitId) {
             Debug.Log("calling GetVideoMetaData");
