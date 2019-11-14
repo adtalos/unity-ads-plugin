@@ -10,6 +10,6 @@ class SplashHandler extends ControllerHandler {
         controller.setListener(listenerProxy);
         controller.setVideoListener(listenerProxy);
         controller.setDefaultCustomListener(listenerProxy);
-        ads.put(unitId, controller);
+        controllers.put(unitId, controller);
     }
 }

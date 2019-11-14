@@ -95,7 +95,7 @@ abstract class ViewHandler extends AbstractHandler {
             if (view.getParent() != null) {
                 ((ViewGroup) view.getParent()).removeView(view);
             }
-            getAdsLayout().addView(view, getAbsoluteLayoutParams(x, y));
+            getLayout().addView(view, getAbsoluteLayoutParams(x, y));
             view.load(unitId);
         });
     }
@@ -107,7 +107,7 @@ abstract class ViewHandler extends AbstractHandler {
             if (view.getParent() != null) {
                 ((ViewGroup) view.getParent()).removeView(view);
             }
-            getAdsLayout().addView(view, getRelationLayoutParams(position, y));
+            getLayout().addView(view, getRelationLayoutParams(position, y));
             view.load(unitId);
         });
     }

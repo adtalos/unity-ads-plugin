@@ -4,12 +4,12 @@ import com.unity.xy.plugin.Controller;
 
 class InterstitialHandler extends ControllerHandler {
     void create(String unitId, boolean immersiveMode, IListener listener) {
-        Controller ad = new Controller(unitId, Controller.INTERSTITIAL);
-        ad.setImmersiveMode(immersiveMode);
+        Controller controller = new Controller(unitId, Controller.INTERSTITIAL);
+        controller.setImmersiveMode(immersiveMode);
         ListenerProxy listenerProxy = new ListenerProxy(unitId, listener);
-        ad.setListener(listenerProxy);
-        ad.setVideoListener(listenerProxy);
-        ad.setDefaultCustomListener(listenerProxy);
-        ads.put(unitId, ad);
+        controller.setListener(listenerProxy);
+        controller.setVideoListener(listenerProxy);
+        controller.setDefaultCustomListener(listenerProxy);
+        controllers.put(unitId, controller);
     }
 }

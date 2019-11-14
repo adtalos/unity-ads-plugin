@@ -8,7 +8,7 @@ abstract class AbstractHandler {
         return UnityPlugin.getInstance().getCurrentActivity();
     }
 
-    static RelativeLayout getAdsLayout() {
-        return UnityPlugin.getInstance().getAdsLayout();
+    static RelativeLayout getLayout() {
+        return UnityPlugin.getInstance().getLayout();
     }
 }

@@ -92,7 +92,7 @@ class NativeViewHandler extends ViewHandler {
                 if (view.getParent() != null) {
                     ((ViewGroup) view.getParent()).removeView(view);
                 }
-                getAdsLayout().addView(view, getAbsoluteLayoutParams(x, y));
+                getLayout().addView(view, getAbsoluteLayoutParams(x, y));
                 view.show();
             } catch (Exception e) {
             }
@@ -106,7 +106,7 @@ class NativeViewHandler extends ViewHandler {
                 if (view.getParent() != null) {
                     ((ViewGroup) view.getParent()).removeView(view);
                 }
-                getAdsLayout().addView(view, getRelationLayoutParams(position, y));
+                getLayout().addView(view, getRelationLayoutParams(position, y));
                 view.show();
             } catch (Exception e) {
             }
@@ -118,6 +118,26 @@ class NativeViewHandler extends ViewHandler {
             View view = views.get(unitId);
             if (view == null) return false;
             return view.isLoaded();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    boolean isPlaying(String unitId) {
+        try {
+            View view = views.get(unitId);
+            if (view == null) return false;
+            return view.getVideoController().isPlaying();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    boolean isEnded(String unitId) {
+        try {
+            View view = views.get(unitId);
+            if (view == null) return false;
+            return view.getVideoController().isEnded();
         } catch (Exception e) {
             return false;
         }

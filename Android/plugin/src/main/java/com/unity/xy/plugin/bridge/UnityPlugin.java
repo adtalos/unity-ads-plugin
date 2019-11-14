@@ -15,15 +15,15 @@ public class UnityPlugin {
     private final static InterstitialHandler interstitialHandler = new InterstitialHandler();
     private final static SplashHandler splashHandler = new SplashHandler();
     private final static RewardedVideoHandler rewardedVideoHandler = new RewardedVideoHandler();
-    private RelativeLayout adsLayout;
+    private RelativeLayout layout;
     private Activity context;
 
     private void setActivity(Activity activity) {
         if (activity != context) {
             context = activity;
             context.runOnUiThread(() -> {
-                adsLayout = new RelativeLayout(context);
-                context.addContentView(adsLayout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+                layout = new RelativeLayout(context);
+                context.addContentView(layout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
                 SDK.requestPermissions(context);
             });
         }
@@ -40,8 +40,8 @@ public class UnityPlugin {
         return context;
     }
 
-    RelativeLayout getAdsLayout() {
-        return adsLayout;
+    RelativeLayout getLayout() {
+        return layout;
     }
 
     public static UnityPlugin getInstance() {
@@ -83,106 +83,116 @@ public class UnityPlugin {
         LandingPageActivity.setFullScreenEnabled(enabled);
     }
 
-    public void showBannerAbsolute(String adUnitId, int width, int height, int x, int y, IListener listener) {
+    public void showBannerAbsolute(String unitId, int width, int height, int x, int y, IListener listener) {
         Log.d("UnityPlugin", "showBannerAbsolute");
-        bannerViewHandler.showAbsolute(adUnitId, width, height, x, y, listener);
+        bannerViewHandler.showAbsolute(unitId, width, height, x, y, listener);
     }
 
-    public void showBannerRelative(String adUnitId, int width, int height, int position, int y, IListener listener) {
+    public void showBannerRelative(String unitId, int width, int height, int position, int y, IListener listener) {
         Log.d("UnityPlugin", "showBannerRelative");
-        bannerViewHandler.showRelative(adUnitId, width, height, position, y, listener);
+        bannerViewHandler.showRelative(unitId, width, height, position, y, listener);
     }
 
-    public void showNativeAbsolute(String adUnitId, int width, int height, int x, int y, IListener listener) {
+    public void showNativeAbsolute(String unitId, int width, int height, int x, int y, IListener listener) {
         Log.d("UnityPlugin", "showNativeAbsolute");
-        nativeViewHandler.showAbsolute(adUnitId, width, height, x, y, listener);
+        nativeViewHandler.showAbsolute(unitId, width, height, x, y, listener);
     }
 
-    public void showNativeRelative(String adUnitId, int width, int height, int position, int y, IListener listener) {
+    public void showNativeRelative(String unitId, int width, int height, int position, int y, IListener listener) {
         Log.d("UnityPlugin", "showNativeRelative");
-        nativeViewHandler.showRelative(adUnitId, width, height, position, y, listener);
+        nativeViewHandler.showRelative(unitId, width, height, position, y, listener);
     }
 
-    public void playVideo(String adUnitId) {
+    public void playVideo(String unitId) {
         Log.d("UnityPlugin", "playVideo");
-        nativeViewHandler.playVideo(adUnitId);
+        nativeViewHandler.playVideo(unitId);
     }
 
-    public void pauseVideo(String adUnitId) {
+    public void pauseVideo(String unitId) {
         Log.d("UnityPlugin", "pauseVideo");
-        nativeViewHandler.pauseVideo(adUnitId);
+        nativeViewHandler.pauseVideo(unitId);
     }
 
-    public void muteVideo(String adUnitId, boolean mute) {
+    public void muteVideo(String unitId, boolean mute) {
         Log.d("UnityPlugin", "muteVideo");
-        nativeViewHandler.muteVideo(adUnitId, mute);
+        nativeViewHandler.muteVideo(unitId, mute);
     }
 
-    public boolean hasVideo(String adUnitId) {
+    public boolean hasVideo(String unitId) {
         Log.d("UnityPlugin", "hasVideo");
-        return nativeViewHandler.hasVideo(adUnitId);
+        return nativeViewHandler.hasVideo(unitId);
     }
 
-    public String getVideoMetaData(String adUnitId) {
+    public String getVideoMetaData(String unitId) {
         Log.d("UnityPlugin", "getVideoMetaData");
-        return nativeViewHandler.getVideoMetaData(adUnitId);
+        return nativeViewHandler.getVideoMetaData(unitId);
     }
 
-    public void destroy(String adUnitId) {
+    public boolean isPlaying(String unitId) {
+        Log.d("UnityPlugin", "isPlaying");
+        return nativeViewHandler.isPlaying(unitId);
+    }
+
+    public boolean isEnded(String unitId) {
+        Log.d("UnityPlugin", "isEnded");
+        return nativeViewHandler.isEnded(unitId);
+    }
+
+    public void destroy(String unitId) {
         Log.d("UnityPlugin", "destroy");
-        ViewHandler.destroy(adUnitId);
+        ViewHandler.destroy(unitId);
     }
 
-    public void pause(String adUnitId) {
+    public void pause(String unitId) {
         Log.d("UnityPlugin", "pause");
-        ViewHandler.pause(adUnitId);
+        ViewHandler.pause(unitId);
     }
 
-    public void resume(String adUnitId) {
+    public void resume(String unitId) {
         Log.d("UnityPlugin", "resume");
-        ViewHandler.resume(adUnitId);
+        ViewHandler.resume(unitId);
     }
 
-    public void loadInterstitial(String adUnitId, boolean immersiveMode, IListener listener) {
+    public void loadInterstitial(String unitId, boolean immersiveMode, IListener listener) {
         Log.d("UnityPlugin", "loadInterstitialAd");
-        interstitialHandler.create(adUnitId, immersiveMode, listener);
+        interstitialHandler.create(unitId, immersiveMode, listener);
     }
 
-    public void loadSplash(String adUnitId, IListener listener) {
+    public void loadSplash(String unitId, IListener listener) {
         Log.d("UnityPlugin", "loadSplashAd");
-        splashHandler.create(adUnitId, listener);
+        splashHandler.create(unitId, listener);
     }
 
-    public void loadRewardedVideo(String adUnitId, IListener listener) {
+    public void loadRewardedVideo(String unitId, IListener listener) {
         Log.d("UnityPlugin", "loadRewardedVideoAd");
-        rewardedVideoHandler.create(adUnitId, listener);
+        rewardedVideoHandler.create(unitId, listener);
     }
 
-    public void loadNative(String adUnitId, int width, int height, IListener listener) {
+    public void loadNative(String unitId, int width, int height, IListener listener) {
         Log.d("UnityPlugin", "loadNativeAd");
-        nativeViewHandler.load(adUnitId, width, height, listener);
+        nativeViewHandler.load(unitId, width, height, listener);
     }
 
-    public void showNativeAbsolute(String adUnitId, int x, int y) {
+    public void showNativeAbsolute(String unitId, int x, int y) {
         Log.d("UnityPlugin", "showNativeAbsolute");
-        nativeViewHandler.showAbsolute(adUnitId, x, y);
+        nativeViewHandler.showAbsolute(unitId, x, y);
     }
 
-    public void showNativeRelative(String adUnitId, int position, int y) {
+    public void showNativeRelative(String unitId, int position, int y) {
         Log.d("UnityPlugin", "showNativeRelative");
-        nativeViewHandler.showRelative(adUnitId, position, y);
+        nativeViewHandler.showRelative(unitId, position, y);
     }
 
-    public boolean isLoaded(String adUnitId) {
+    public boolean isLoaded(String unitId) {
         Log.d("UnityPlugin", "isLoaded");
-        if (ControllerHandler.isLoaded(adUnitId)) {
+        if (ControllerHandler.isLoaded(unitId)) {
             return true;
         }
-        return nativeViewHandler.isLoaded(adUnitId);
+        return nativeViewHandler.isLoaded(unitId);
     }
 
-    public void show(String adUnitId) {
+    public void show(String unitId) {
         Log.d("UnityPlugin", "show");
-        ControllerHandler.show(adUnitId);
+        ControllerHandler.show(unitId);
     }
 }
