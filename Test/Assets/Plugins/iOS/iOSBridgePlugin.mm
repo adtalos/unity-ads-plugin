@@ -440,7 +440,7 @@ bool _adtalosIsEnded(const char *adUnitId) {
     if (adView != nil) {
         return (bool)[adView.videoController isEnded];
     }
-    return false;
+    return true;
 }
 
 const char * _adtalosGetVideoMetaData(const char *adUnitId) {
