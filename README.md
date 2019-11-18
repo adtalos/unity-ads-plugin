@@ -159,11 +159,13 @@ ad.ShowBannerAbsolute("98738D91D3BB241458D3FAE5A5BF7D34", 0, 0);
 ### 原生视频播放控制
 
 ```C#
-bool hasVideo = ad.HasVideo(adUnitId);  // 判断是否存在视频
+bool hasVideo = ad.HasVideo(adUnitId);   // 判断是否存在视频
+bool isPlaying = ad.isPlaying(adUnitId); // 判断视频是否正在播放
+bool isEnded = ad.isEnded(adUnitId);     // 判断视频是否播放结束
 
-ad.PlayVideo(adUnitId);                 // 播放视频
-ad.PauseVideo(adUnitId);                // 暂停播放
-ad.MuteVideo(adUnitId, mute);           // 静音视频
+ad.PlayVideo(adUnitId);                  // 播放视频
+ad.PauseVideo(adUnitId);                 // 暂停播放
+ad.MuteVideo(adUnitId, mute);            // 静音视频
 
 AdtalosVideoMetadata metadata = ad.GetVideoMetaData(adUnitId); // 获取视频元数据
 ```
