@@ -40,10 +40,10 @@ ad.LoadSplashAd("5C3DD65A809B08A2D6CF3DEFBC7E09C7", listener);
 ### 事件处理
 
 ```C#
-    AdtalosListener listener = (adUnitId, name, data) => Debug.Log("adUnitId: " + adUnitId + " event: " + name + " data: " + data);
+    AdtalosListener listener = (unitId, name, data) => Debug.Log("unitId: " + unitId + " event: " + name + " data: " + data);
 ```
 
-上面就是 `listener` 的定义方法。其中 `adUnitId` 参数表示触发该事件的广告 Id，`name` 表示触发的事件名称，跟 SDK 标准事件对应的都是 `on` 开头的事件名，自定义事件名称推荐不要加 `on` 开头的字样，防止跟标准事件发生冲突，也便于识别。
+上面就是 `listener` 的定义方法。其中 `unitId` 参数表示触发该事件的广告 Id，`name` 表示触发的事件名称，跟 SDK 标准事件对应的都是 `on` 开头的事件名，自定义事件名称推荐不要加 `on` 开头的字样，防止跟标准事件发生冲突，也便于识别。
 
 下面是标准事件名列表：
 
@@ -159,25 +159,25 @@ ad.ShowBannerAbsolute("98738D91D3BB241458D3FAE5A5BF7D34", 0, 0);
 ### 原生视频播放控制
 
 ```C#
-bool hasVideo = ad.HasVideo(adUnitId);   // 判断是否存在视频
-bool isPlaying = ad.isPlaying(adUnitId); // 判断视频是否正在播放
-bool isEnded = ad.isEnded(adUnitId);     // 判断视频是否播放结束
+bool hasVideo = ad.HasVideo(unitId);   // 判断是否存在视频
+bool isPlaying = ad.isPlaying(unitId); // 判断视频是否正在播放
+bool isEnded = ad.isEnded(unitId);     // 判断视频是否播放结束
 
-ad.PlayVideo(adUnitId);                  // 播放视频
-ad.PauseVideo(adUnitId);                 // 暂停播放
-ad.MuteVideo(adUnitId, mute);            // 静音视频
+ad.PlayVideo(unitId);                  // 播放视频
+ad.PauseVideo(unitId);                 // 暂停播放
+ad.MuteVideo(unitId, mute);            // 静音视频
 
-AdtalosVideoMetadata metadata = ad.GetVideoMetaData(adUnitId); // 获取视频元数据
+AdtalosVideoMetadata metadata = ad.GetVideoMetaData(unitId); // 获取视频元数据
 ```
 
-参数 `adUnitId` 只能是原生广告Id，且只有 `HasVideo` 返回结果为 `true` 时，其它操作执行才会有效。
+参数 `unitId` 只能是原生广告Id，且只有 `HasVideo` 返回结果为 `true` 时，其它操作执行才会有效。
 
 ### 资源回收
 
 ```C#
-ad.Destroy(adUnitId);    // 回收资源
-ad.Pause(adUnitId);      // 暂停广告
-ad.Resume(adUnitId);     // 恢复广告
+ad.Destroy(unitId);    // 回收资源
+ad.Pause(unitId);      // 暂停广告
+ad.Resume(unitId);     // 恢复广告
 ```
 
-参数 `adUnitId` 是横幅广告或原生广告位的 Id。
+参数 `unitId` 是横幅广告或原生广告位的 Id。
