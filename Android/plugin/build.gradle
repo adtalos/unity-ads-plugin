@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 11
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 22
+        versionName "2.2"
     }
 
     compileOptions {
@@ -33,5 +33,5 @@ repositories {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    compileOnly 'com.unity.xy.plugin:adtalos-sdk:2.0.0'
+    compileOnly 'com.unity.xy.plugin:adtalos-sdk:2.2.0'
 }

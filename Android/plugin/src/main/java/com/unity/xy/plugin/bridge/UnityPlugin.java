@@ -155,17 +155,17 @@ public class UnityPlugin {
 
     public void loadInterstitial(String unitId, boolean immersiveMode, IListener listener) {
         Log.d("UnityPlugin", "loadInterstitialAd");
-        interstitialHandler.create(unitId, immersiveMode, listener);
+        interstitialHandler.load(unitId, immersiveMode, listener);
     }
 
     public void loadSplash(String unitId, IListener listener) {
         Log.d("UnityPlugin", "loadSplashAd");
-        splashHandler.create(unitId, listener);
+        splashHandler.load(unitId, listener);
     }
 
     public void loadRewardedVideo(String unitId, IListener listener) {
         Log.d("UnityPlugin", "loadRewardedVideoAd");
-        rewardedVideoHandler.create(unitId, listener);
+        rewardedVideoHandler.load(unitId, listener);
     }
 
     public void loadNative(String unitId, int width, int height, IListener listener) {
