@@ -11,6 +11,7 @@ static NSMutableDictionary *ads = [NSMutableDictionary new];
 
 - (void) onAdRendered;
 - (void) onAdImpressionFinished;
+- (void) onAdImpressionFailed;
 - (void) onAdImpressionReceivedError:(NSError *)error;
 - (void) onAdLoaded;
 - (void) onAdFailedToLoad:(NSError *)error;
@@ -51,6 +52,10 @@ static NSMutableDictionary *ads = [NSMutableDictionary new];
 
 - (void) onAdImpressionFinished {
     _listenerProxy([_adUnitId UTF8String], "onImpressionFinished", "");
+}
+
+- (void) onAdImpressionFailed {
+    _listenerProxy([_adUnitId UTF8String], "onImpressionFailed", "");
 }
 
 - (void) onAdImpressionReceivedError:(NSError *)error {
@@ -343,32 +348,44 @@ void _adtalosShowNativeAdRelative(const char *adUnitId, int position, int y) {
 
 void _adtalosLoadInterstitialAd(const char *adUnitId, AdtalosListenerProxy listenerProxy) {
     NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
-    AdtalosInterstitialAd *ad = [[AdtalosInterstitialAd alloc] init:unitId];
-    AdtalosBridgePluginListener *listener = [[AdtalosBridgePluginListener alloc] init:listenerProxy withAdUnitId:unitId];
-    listeners[unitId] = listener;
-    ad.delegate = listener;
-    ad.videoDelegate = listener;
-    ads[unitId] = ad;
+    AdtalosInterstitialAd *ad = ads[unitId];
+    if (ad == nil) {
+        ad = [[AdtalosInterstitialAd alloc] init:unitId];
+        AdtalosBridgePluginListener *listener = [[AdtalosBridgePluginListener alloc] init:listenerProxy withAdUnitId:unitId];
+        listeners[unitId] = listener;
+        ad.delegate = listener;
+        ad.videoDelegate = listener;
+        ads[unitId] = ad;
+    }
+    [ad loadAd];
 }
 
 void _adtalosLoadSplashAd(const char *adUnitId, AdtalosListenerProxy listenerProxy) {
     NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
-    AdtalosSplashAd *ad = [[AdtalosSplashAd alloc] init:unitId];
-    AdtalosBridgePluginListener *listener = [[AdtalosBridgePluginListener alloc] init:listenerProxy withAdUnitId:unitId];
-    listeners[unitId] = listener;
-    ad.delegate = listener;
-    ad.videoDelegate = listener;
-    ads[unitId] = ad;
+    AdtalosInterstitialAd *ad = ads[unitId];
+    if (ad == nil) {
+        ad = [[AdtalosSplashAd alloc] init:unitId];
+        AdtalosBridgePluginListener *listener = [[AdtalosBridgePluginListener alloc] init:listenerProxy withAdUnitId:unitId];
+        listeners[unitId] = listener;
+        ad.delegate = listener;
+        ad.videoDelegate = listener;
+        ads[unitId] = ad;
+    }
+    [ad loadAd];
 }
 
 void _adtalosLoadRewardedVideoAd(const char *adUnitId, AdtalosListenerProxy listenerProxy) {
     NSString *unitId = [[NSString alloc] initWithUTF8String:adUnitId];
-    AdtalosRewardedVideoAd *ad = [[AdtalosRewardedVideoAd alloc] init:unitId];
-    AdtalosBridgePluginListener *listener = [[AdtalosBridgePluginListener alloc] init:listenerProxy withAdUnitId:unitId];
-    listeners[unitId] = listener;
-    ad.delegate = listener;
-    ad.videoDelegate = listener;
-    ads[unitId] = ad;
+    AdtalosInterstitialAd *ad = ads[unitId];
+    if (ad == nil) {
+        ad = [[AdtalosRewardedVideoAd alloc] init:unitId];
+        AdtalosBridgePluginListener *listener = [[AdtalosBridgePluginListener alloc] init:listenerProxy withAdUnitId:unitId];
+        listeners[unitId] = listener;
+        ad.delegate = listener;
+        ad.videoDelegate = listener;
+        ads[unitId] = ad;
+    }
+    [ad loadAd];
 }
 
 bool _adtalosIsLoaded(const char *adUnitId) {

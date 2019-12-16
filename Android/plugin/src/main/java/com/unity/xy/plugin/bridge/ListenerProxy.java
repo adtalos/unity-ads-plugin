@@ -36,6 +36,13 @@ class ListenerProxy implements Listener, VideoListener, DefaultCustomListener {
     }
 
     @Override
+    public void onImpressionFailed() {
+        if (listener != null) {
+            listener.on(unitId, "onImpressionFailed", "");
+        }
+    }
+
+    @Override
     public void onImpressionReceivedError(int errorCode, String description) {
         if (listener != null) {
             listener.on(unitId, "onImpressionReceivedError", errorCode + ":" + description);
