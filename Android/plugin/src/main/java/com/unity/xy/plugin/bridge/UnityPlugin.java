@@ -1,10 +1,12 @@
 package com.unity.xy.plugin.bridge;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
+import com.bun.miitmdid.core.JLibrary;
 import com.unity.xy.plugin.LandingPageActivity;
 import com.unity.xy.plugin.SDK;
 
@@ -15,29 +17,29 @@ public class UnityPlugin {
     private final static InterstitialHandler interstitialHandler = new InterstitialHandler();
     private final static SplashHandler splashHandler = new SplashHandler();
     private final static RewardedVideoHandler rewardedVideoHandler = new RewardedVideoHandler();
+    private final MsaHelper helper = new MsaHelper();
     private RelativeLayout layout;
-    private Activity context;
+    private Activity activity;
 
-    private void setActivity(Activity activity) {
-        if (activity != context) {
-            context = activity;
-            context.runOnUiThread(() -> {
-                layout = new RelativeLayout(context);
-                context.addContentView(layout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-                SDK.requestPermissions(context);
-            });
-        }
-    }
-
-    Activity getCurrentActivity() {
+    private UnityPlugin() {
         try {
             Class<?> unityPlayer = Class.forName("com.unity3d.player.UnityPlayer");
-            Activity activity = (Activity) unityPlayer.getField("currentActivity").get(unityPlayer);
-            setActivity(activity);
+            activity = (Activity) unityPlayer.getField("currentActivity").get(unityPlayer);
+            Context context = activity.getApplicationContext();
+            JLibrary.InitEntry(context);
+            helper.getDeviceIds(context);
+            activity.runOnUiThread(() -> {
+                layout = new RelativeLayout(activity);
+                activity.addContentView(layout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+                SDK.requestPermissions(activity);
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return context;
+    }
+
+    Activity getActivity() {
+        return activity;
     }
 
     RelativeLayout getLayout() {
@@ -46,11 +48,6 @@ public class UnityPlugin {
 
     public static UnityPlugin getInstance() {
         return instance;
-    }
-
-    public void setOAID(String oaid) {
-        Log.d("UnityPlugin", "setOAID");
-        SDK.setOAID(oaid);
     }
 
     public boolean isLandingPageDisplayActionBarEnabled() {
