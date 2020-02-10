@@ -152,18 +152,6 @@ namespace Adtalos {
             if (jadtalos == null) {
                 AndroidJavaClass adtalosUnityPluginClass = new AndroidJavaClass("com.unity.xy.plugin.bridge.UnityPlugin");
                 jadtalos = adtalosUnityPluginClass.CallStatic<AndroidJavaObject>("getInstance");
-                //if (!Permission.HasUserAuthorizedPermission("android.permission.READ_PHONE_STATE")) {
-                //    Permission.RequestUserPermission("android.permission.READ_PHONE_STATE");
-                //}
-            }
-        }
-
-        private string oaid = string.Empty;
-        public string OAID {
-            get { return oaid; }
-            set {
-                oaid = value;
-                jadtalos.Call("setOAID", oaid);
             }
         }
 

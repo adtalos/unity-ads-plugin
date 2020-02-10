@@ -5,7 +5,7 @@ import android.widget.RelativeLayout;
 
 abstract class AbstractHandler {
     static Activity getContext() {
-        return UnityPlugin.getInstance().getCurrentActivity();
+        return UnityPlugin.getInstance().getActivity();
     }
 
     static RelativeLayout getLayout() {
